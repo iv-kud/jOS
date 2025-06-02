@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
-set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 project(jOS LANGUAGES C CXX ASM_NASM)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 include(toolchain.cmake)
 
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/include)
@@ -18,24 +18,29 @@ add_executable(kernel
     ${CXX_SOURCES}
 )
 
+set(CMAKE_CXX_LINK_EXECUTABLE 
+    "<CMAKE_LINKER> <FLAGS> <CMAKE_CXX_LINK_FLAGS> <LINK_FLAGS> <OBJECTS> -o <TARGET> <LINK_LIBRARIES>"
+)
+
 target_include_directories(kernel PRIVATE
     ${CMAKE_SOURCE_DIR}/include
 )
 
 target_compile_options(kernel PRIVATE
-    -m32
-    -ffreestanding
-    -fno-exceptions
-    -fno-rtti
-    -nostdlib
-    -g
+    $<$<COMPILE_LANGUAGE:CXX>:-std=c++20>
+    $<$<COMPILE_LANGUAGE:CXX>:-m32>
+    $<$<COMPILE_LANGUAGE:CXX>:-ffreestanding>
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions>
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
+    $<$<COMPILE_LANGUAGE:CXX>:-nostdlib>
+    $<$<COMPILE_LANGUAGE:CXX>:-g>
 )
 
 target_link_options(kernel PRIVATE
     -T${CMAKE_SOURCE_DIR}/kernel/linker.ld
     -nostdlib
-    -Wl,-m,elf_i386
-    -Wl,--nmagic
+    -m elf_i386
+    --nmagic
 )
 
 add_custom_target(iso ALL
