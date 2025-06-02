@@ -2,17 +2,10 @@
 
 extern "C" void kernel_main() {
     Display display;
-
-    display.printChar('H');
-    display.printChar('e');
-    display.printChar('l');
-    display.printChar('l');
-    display.printChar('o');
-    display.printChar(' ');
-    display.printChar('j');
-    display.printChar('O');
-    display.printChar('S');
+    display.printChars("Hello JustOS!\n");
+    display.printChars("This\t|\tis\t|\tjust\t|\tstring\n");
+    display.printChars(228 + 2);
     display.printChar('\n');
-    display.printChars("This is just string");
+    display.printChars(1234567890);
     while(true);
 }
