@@ -26,6 +26,13 @@ target_include_directories(kernel PRIVATE
     ${CMAKE_SOURCE_DIR}/include
 )
 
+execute_process(
+    COMMAND sh -c "i686-elf-gcc -print-libgcc-file-name"
+    OUTPUT_VARIABLE LIBGCC_PATH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+get_filename_component(LIBGCC_DIR ${LIBGCC_PATH} DIRECTORY)
 target_compile_options(kernel PRIVATE
     $<$<COMPILE_LANGUAGE:CXX>:-std=c++20>
     $<$<COMPILE_LANGUAGE:CXX>:-m32>
@@ -39,9 +46,12 @@ target_compile_options(kernel PRIVATE
 target_link_options(kernel PRIVATE
     -T${CMAKE_SOURCE_DIR}/kernel/linker.ld
     -nostdlib
-    -m elf_i386
+    -static
     --nmagic
+    -m elf_i386
 )
+
+target_link_libraries(kernel -L${LIBGCC_DIR} -lgcc)
 
 add_custom_target(iso ALL
     COMMAND mkdir -p isodir/boot/grub
