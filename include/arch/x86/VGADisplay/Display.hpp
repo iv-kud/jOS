@@ -9,15 +9,15 @@ class Display
 public:
     Display();
     void printChars(const char* ch);
-    void printChars(const uint32_t ch);
+    void printChars(const uint64_t ch);
     void newLine();
     void horizontalTab();
     void printChar(const char ch);
     ~Display() = default;
 private:
-    void intToString(const uint32_t val,char*);
+    void intToString(const uint64_t val, char*);
 
-    uint32_t intToChar(uint32_t &);
+    uint8_t intToChar(uint64_t &);
     void swap(char* buff, const uint32_t size);
 private:
     uint16_t* video_memory;

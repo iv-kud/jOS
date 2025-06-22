@@ -32,8 +32,8 @@ void Display::printChar(const char ch) {
     }
 }
 
-void Display::intToString(const uint32_t val,char* buff) {
-    uint32_t number = val;
+void Display::intToString(const uint64_t val,char* buff) {
+    uint64_t number = val;
     uint32_t i = 0;
     while (number != 0)
         buff[i++] = intToChar(number);
@@ -42,14 +42,14 @@ void Display::intToString(const uint32_t val,char* buff) {
     swap(buff, i - 1);
 }
 
-uint32_t Display::intToChar(uint32_t &number)
+uint8_t Display::intToChar(uint64_t &number)
 {
-    uint32_t numberChar = (number % 10) + '0';
+    uint8_t numberChar = (number % 10) + '0';
     number /= 10;
     return numberChar;
 }
 
-void Display::printChars(const uint32_t ch)
+void Display::printChars(const uint64_t ch)
 {
     char valueStr[32];
     intToString(ch,valueStr);
@@ -57,7 +57,7 @@ void Display::printChars(const uint32_t ch)
 }
 
 void Display::swap(char *buff, const uint32_t size) {
-    for (uint32_t i = 0; i < size/2; i++)
+    for (uint32_t i = 0; i <= size/2; i++)
     {
         int tmp =  buff[i];
         buff[i] = buff[size - i];
