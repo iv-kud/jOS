@@ -1,11 +1,11 @@
+#include <arch/x86/VGADisplay/Display.hpp>
+
 extern "C" void kernel_main() {
-    const char* hello = "Hello JustOS!";
-    char* vide_memory = (char*) 0xB8000;
-    for (int i = 0; hello[i] != '\0'; i++)
-    {
-        vide_memory[i * 2] = hello[i];
-        vide_memory[i * 2 + 1] = 0x0A;
-    }
-    
+    Display display;
+    display.printChars("Hello JustOS!\n");
+    display.printChars("This\t|\tis\t|\tjust\t|\tstring\n");
+    display.printChars(228 + 2);
+    display.printChar('\n');
+    display.printChars(1234567890);
     while(true);
 }
