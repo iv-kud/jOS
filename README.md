@@ -27,7 +27,7 @@ sudo pacman -S gdb
 #### Arch Linux
 ```bash
 mkdir build && cd build
-cmake -DCMAKE_TOOLCHAIN_FILE=../toolchain.cmake ..
+cmake ..
 make
 make run
 ```
