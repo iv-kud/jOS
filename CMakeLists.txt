@@ -19,7 +19,9 @@ else()
 endif()
 
 project(JustOS VERSION 0.1 LANGUAGES C CXX)
-add_executable(${TARGET_NAME})
+include_directories(${CMAKE_SOURCE_DIR}/arch/x86/core)
+
+
 ##--ВОТ ТУТ СОМНИТЕЛЬНАЯ РЕАЛИЗАЦИЯ ПОДКЛЮЧЕНИЕ ФАЙЛОВ!!--##
 file(GLOB_RECURSE CPP_SOURCES
     "kernel/*.cpp"
@@ -47,7 +49,7 @@ set(ALL_SOURCES
     ${HPP_SOURCES}
 )
 
-target_sources(${TARGET_NAME} PRIVATE ${ALL_SOURCES})
+add_executable(${TARGET_NAME} ${ALL_SOURCES})
 
 if(ARCH_LOWER STREQUAL "x86")
     enable_language(ASM_NASM)
