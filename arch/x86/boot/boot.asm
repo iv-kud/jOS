@@ -10,6 +10,7 @@ header_start:
     dw 0    ; flags
     dd 8    ; size tag 
 header_end:
+
 section .text
 global _start
 extern kernel_main ; main func from kernel.cpp 

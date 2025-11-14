@@ -6,6 +6,6 @@ extern "C" void kernel_main() {
         vide_memory[i * 2] = hello[i];
         vide_memory[i * 2 + 1] = 0x0A;
     }
-    
+
     while(true);
 }

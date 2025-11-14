@@ -20,7 +20,7 @@ endif()
 
 project(JustOS VERSION 0.1 LANGUAGES C CXX)
 add_executable(${TARGET_NAME})
-
+##--ВОТ ТУТ СОМНИТЕЛЬНАЯ РЕАЛИЗАЦИЯ ПОДКЛЮЧЕНИЕ ФАЙЛОВ!!--##
 file(GLOB_RECURSE CPP_SOURCES
     "kernel/*.cpp"
     "arch/*.cpp"
