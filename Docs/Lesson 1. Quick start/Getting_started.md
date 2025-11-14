@@ -178,11 +178,17 @@ stack_top:
 После того как загрузчик (GRUB) обнаруживает и проверяет Multiboot2 заголовок, он загружает ядро в память по адресу 1 МБ, подготавливает базовое окружение и передает управление на метку `_start`. Ассемблерный код выполняет минимально необходимую инициализацию: отключает прерывания чтобы гарантировать бесперебойную работу на ранних этапах, настраивает стек для корректного вызова функций, и передает управление ядру на C++. Стек размещается в отдельной секции `.bss` которая автоматически обнуляется при загрузке.
 
 Сcылки:
+
 https://web.archive.org/web/20240920214648/https://wiki.osdev.org/GRUB
+
 https://web.archive.org/web/20240915191242/https://www.gnu.org/software/grub/manual/grub/grub.html
+
 https://web.archive.org/web/20240920214640/https://wiki.osdev.org/LD
+
 https://web.archive.org/web/20240920214649/https://wiki.osdev.org/Linker_Scripts
+
 https://web.archive.org/web/20240920214656/https://wiki.osdev.org/Multiboot
+
 https://www.gnu.org/software/grub/manual/multiboot2/multiboot.html#Header-magic-fields
 
 ##### Настройка компилятора для встраиваемых систем
