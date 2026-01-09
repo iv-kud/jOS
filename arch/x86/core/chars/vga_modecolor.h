@@ -1,7 +1,7 @@
 #ifndef VGA_MODECOLOR_H
 #define VGA_MODECOLOR_H
-namespace chars {
-  enum class char_color{
+namespace CHARS {
+  enum class CHAR_COLOR {
     COLOR_BLACK        = 0x00,
     COLOR_BLUE         = 0x01,
     COLOR_GREEN        = 0x02,

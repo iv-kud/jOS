@@ -1,6 +1,6 @@
 section .multiboot
 header_start:
-    dd 0xE85250D6                ; magic number 
+    dd 0xE85250D6                ; magic number
     dd 0                         ; architecture 0 = x86
     dd header_end - header_start ; header length
     dd 0x100000000 - (0xE85250D6 + 0 +(header_end - header_start)) ; magic + architecture + header_length + checksum = 0 =>
@@ -8,12 +8,12 @@ header_start:
     ;tags
     dw 0    ; type tag
     dw 0    ; flags
-    dd 8    ; size tag 
+    dd 8    ; size tag
 header_end:
 
 section .text
 global _start
-extern kernel_main ; main func from kernel.cpp 
+extern kernel_main ; main func from kernel.cpp
 
 _start:
     cli
