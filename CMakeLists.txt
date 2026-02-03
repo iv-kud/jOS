@@ -85,3 +85,14 @@ add_custom_target(run
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     COMMENT "Starting QEMU"
 )
+
+add_custom_target(debug
+    COMMAND qemu-system-i386 -cdrom ${CMAKE_BINARY_DIR}/${TARGET_NAME}.iso -vga std -S -gdb tcp::1234
+    COMMENT "Starting QEMU in debug mode (GDB server: 1234)"
+    DEPENDS iso
+)
+
+add_custom_target(gdb
+    COMMAND gdb -ex "target remote :1234" -ex "break main" ${CMAKE_BINARY_DIR}/JustOS-x86
+    COMMENT "Connecting GDB to QEMU"
+)
