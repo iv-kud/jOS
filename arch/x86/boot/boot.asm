@@ -13,12 +13,12 @@ header_end:
 
 section .text
 global _start
-extern kernel_main ; main func from kernel.cpp
+extern main ; main func from kernel.cpp
 
 _start:
     cli
     mov esp, stack_top
-    call kernel_main
+    call main
     hlt
 
 section .bss
