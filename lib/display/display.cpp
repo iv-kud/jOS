@@ -45,6 +45,19 @@ Display &Display::operator<<(const char *ch)
   return *this;
 }
 
+Display &Display::operator<<(int val)
+{
+  if(val == 0)
+    return *this;
+  int next = val / 10;
+  int digit = val % 10;
+
+  if(next != 0)
+    *this << next;
+  *this << static_cast<char>('0' + digit);
+  return *this;
+}
+
 Display jDebug() {
   return Display(LogLevel::Debug, CHARS::CHAR_COLOR::COLOR_DARK_GRAY);
 }

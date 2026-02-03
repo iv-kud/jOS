@@ -11,6 +11,7 @@ public:
   ~Display();
   Display& operator<<(const char& ch);
   Display& operator<<(const char* ch);
+  Display& operator<<(int val);
   static void setThreshold(LogLevel level);
 private:
   static LogLevel m_thresholdLevel;
