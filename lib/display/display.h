@@ -20,7 +20,7 @@ private:
   LogLevel m_currentLevel;
   CHARS::CHAR_COLOR m_color;
   bool m_used = false;
-  VGADriver &vga;
+  VGADriver &m_vga;
 };
 
 Display jDebug();

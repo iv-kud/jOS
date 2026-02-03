@@ -5,17 +5,17 @@ uint8_t Display::s_currentLine = 0;
 Display::Display(LogLevel level, CHARS::CHAR_COLOR color)
     : m_currentLevel(level)
     , m_color(color)
-    , vga(VGADriver::instance())
+    , m_vga(VGADriver::instance())
 {
-  vga.setX(0);
-  vga.setY(s_currentLine);
-  vga.setColor(m_color);
+  m_vga.setX(0);
+  m_vga.setY(s_currentLine);
+  m_vga.setColor(m_color);
 }
 
 Display::~Display() {
   if (m_used) {
       s_currentLine++;
-      if (s_currentLine >= vga.getBuffHeight()) {
+      if (s_currentLine >= m_vga.getBuffHeight()) {
           s_currentLine = 24;
         }
     }
@@ -32,7 +32,7 @@ Display &Display::operator<<(const char &ch)
 {
   if (m_currentLevel >= m_thresholdLevel) {
       m_used = true;
-      vga.print(ch);
+      m_vga.print(ch);
     }
   return *this;
 }
