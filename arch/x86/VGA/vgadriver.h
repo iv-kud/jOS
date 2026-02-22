@@ -19,6 +19,7 @@ public:
   uint8_t getBuffHeight() const;
   void print(const char ch);
   void newLine();
+  void moveCursor();
 
   VGADriver(const VGADriver&) = delete;
   VGADriver& operator=(const VGADriver&) = delete;
@@ -26,8 +27,8 @@ public:
 private:
   VGADriver();
   VGADriver(const CHARS::CHAR_COLOR color);
+  void scroll();
   uint16_t cursorPosition() const;
-  void moveCursor();
   void horizontalTab();
   uint8_t nextTabPosition(const uint8_t cur_pos) const;
 

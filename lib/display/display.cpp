@@ -2,8 +2,8 @@
 LogLevel Display::m_thresholdLevel = LogLevel::Debug;
 Display::Display(LogLevel level, CHARS::CHAR_COLOR color)
     : m_currentLevel(level)
-    , m_color(color)
-    , m_vga(VGADriver::instance())
+      , m_color(color)
+      , m_vga(VGADriver::instance())
 {
   m_vga.setX(0);
   m_vga.setY(m_vga.getY());
@@ -13,9 +13,7 @@ Display::Display(LogLevel level, CHARS::CHAR_COLOR color)
 Display::~Display() {
   if (m_used) {
       m_vga.newLine();
-      if (m_vga.getY() >= m_vga.getBuffHeight()) {
-          m_vga.setY(24);
-        }
+      m_vga.moveCursor();
     }
 }
 
@@ -39,17 +37,18 @@ Display &Display::operator<<(const char *ch)
 {
   for (int var = 0; ch[var] != '\0'; ++var) {
       *this << ch[var];
-  }
+    }
   return *this;
 }
 
 Display &Display::operator<<(int val)
 {
   if (val < 0) {
-    *this << '-';
-    val = -val;
-  }
+      *this << '-';
+      val = -val;
+    }
   *this << static_cast<uint64_t>(val);
+  return *this;
 }
 
 Display &Display::operator<<(uint64_t val)
