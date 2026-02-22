@@ -17,7 +17,6 @@ public:
   void setColor(const CHARS::CHAR_COLOR color);
   uint8_t getBuffWidth() const;
   uint8_t getBuffHeight() const;
-  void newLine();
   void print(const char ch);
 
   VGADriver(const VGADriver&) = delete;
@@ -26,7 +25,10 @@ public:
 private:
   VGADriver();
   VGADriver(const CHARS::CHAR_COLOR color);
+  uint16_t cursorPosition() const;
+  void moveCursor();
   void horizontalTab();
+  void newLine();
   uint8_t nextTabPosition(const uint8_t cur_pos) const;
 
 private:

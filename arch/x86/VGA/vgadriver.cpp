@@ -1,4 +1,5 @@
 #include "vgadriver.h"
+#include "portIO/port.h"
 
 VGADriver::VGADriver ()
   : m_x(0)
@@ -13,6 +14,19 @@ VGADriver::VGADriver(const CHARS::CHAR_COLOR color)
   , m_video_memory((uint16_t*)0xb8000)
   , m_color(color)
 {}
+
+uint16_t VGADriver::cursorPosition() const
+{
+  return m_y * m_width + m_x;
+}
+
+void VGADriver::moveCursor()
+{
+  Port::write_port(0x3D4, 14);
+  Port::write_port(0x3D5, cursorPosition() >> 8);
+  Port::write_port(0x3D4, 15);
+  Port::write_port(0x3D5, cursorPosition());
+}
 
 VGADriver &VGADriver::instance()
 {
@@ -84,12 +98,19 @@ void VGADriver::print(const char ch)
 {
   switch (ch)
   {
-  case (uint8_t)CHARS::ESCAPE_CHARS::N_LINE:newLine();break;
-  case (uint8_t)CHARS::ESCAPE_CHARS::H_TAB: horizontalTab();break;
+  case (uint8_t)CHARS::ESCAPE_CHARS::N_LINE:
+    newLine();
+  break;
+
+  case (uint8_t)CHARS::ESCAPE_CHARS::H_TAB:
+    horizontalTab();
+  break;
+
   default:
-    uint16_t *charPos = m_video_memory + (m_y * m_width  + m_x);
+    uint16_t *charPos = m_video_memory + cursorPosition();
     *charPos = ((uint8_t)m_color << (uint8_t)8) | ch;
-    m_x++;
+    ++m_x;
+    moveCursor();
     break;
   }
 }
