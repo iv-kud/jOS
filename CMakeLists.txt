@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
+project(JustOS VERSION 0.1 LANGUAGES C CXX)
 
 set(ARCH "x86" CACHE STRING "Target architecture (x86, arm, etc)")
 
@@ -9,8 +10,8 @@ endif()
 string(TOLOWER "${ARCH}" ARCH_LOWER)
 
 if(ARCH_LOWER STREQUAL "x86")
-    set(TARGET_NAME "JustOS-X86")
-    set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/arch/x86/toolchain-x86.cmake)
+    set(TARGET_NAME "${PROJECT_NAME}-x86")
+    # set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/arch/x86/toolchain-x86.cmake)
     message(STATUS "Building for x86 architecture")
 elseif(ARCH_LOWER STREQUAL "arm")
     #TODO: Add build for ARM arch
@@ -18,24 +19,26 @@ else()
     message(FATAL_ERROR "Unknown architecture: ${ARCH_LOWER}. Supported: x86, arm")
 endif()
 
-project(JustOS VERSION 0.1 LANGUAGES C CXX)
-add_executable(${TARGET_NAME})
+include_directories(${CMAKE_SOURCE_DIR}/arch/x86/core)
+
+add_subdirectory(lib/)
+
 ##--ВОТ ТУТ СОМНИТЕЛЬНАЯ РЕАЛИЗАЦИЯ ПОДКЛЮЧЕНИЕ ФАЙЛОВ!!--##
-file(GLOB_RECURSE CPP_SOURCES
+FILE(GLOB_RECURSE CPP_SOURCES
     "kernel/*.cpp"
     "arch/*.cpp"
 )
 
-file(GLOB_RECURSE ASM_SOURCES
+FILE(GLOB_RECURSE ASM_SOURCES
     "arch/*.asm"
 )
 
-file(GLOB_RECURSE H_SOURCES
+FILE(GLOB_RECURSE H_SOURCES
     "kernel/*.h"
     "arch/*.h"
 )
 
-file(GLOB_RECURSE HPP_SOURCES
+FILE(GLOB_RECURSE HPP_SOURCES
     "kernel/*.hpp"
     "arch/*.hpp"
 )
@@ -47,10 +50,9 @@ set(ALL_SOURCES
     ${HPP_SOURCES}
 )
 
-target_sources(${TARGET_NAME} PRIVATE ${ALL_SOURCES})
-
 if(ARCH_LOWER STREQUAL "x86")
     enable_language(ASM_NASM)
+    add_executable(${TARGET_NAME}  ${ALL_SOURCES})
     execute_process(
         COMMAND i686-elf-gcc -print-libgcc-file-name
         OUTPUT_VARIABLE LIBGCC_PATH
@@ -60,6 +62,7 @@ if(ARCH_LOWER STREQUAL "x86")
     message(STATUS "LibGCC directory: ${LIBGCC_DIR}")
     target_link_options(${TARGET_NAME} PRIVATE ${OS_LINKER_FLAGS})
     target_link_libraries(${TARGET_NAME} PRIVATE
+        display
         -L${LIBGCC_DIR}
         -lgcc
     )
@@ -81,4 +84,15 @@ add_custom_target(run
     COMMAND qemu-system-i386 -cdrom ${TARGET_NAME}.iso
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     COMMENT "Starting QEMU"
+)
+
+add_custom_target(debug
+    COMMAND qemu-system-i386 -cdrom ${CMAKE_BINARY_DIR}/${TARGET_NAME}.iso -vga std -S -gdb tcp::1234
+    COMMENT "Starting QEMU in debug mode (GDB server: 1234)"
+    DEPENDS iso
+)
+
+add_custom_target(gdb
+    COMMAND gdb -ex "target remote :1234" -ex "break main" ${CMAKE_BINARY_DIR}/JustOS-x86
+    COMMENT "Connecting GDB to QEMU"
 )
