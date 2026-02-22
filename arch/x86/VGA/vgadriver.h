@@ -18,6 +18,7 @@ public:
   uint8_t getBuffWidth() const;
   uint8_t getBuffHeight() const;
   void print(const char ch);
+  void newLine();
 
   VGADriver(const VGADriver&) = delete;
   VGADriver& operator=(const VGADriver&) = delete;
@@ -28,7 +29,6 @@ private:
   uint16_t cursorPosition() const;
   void moveCursor();
   void horizontalTab();
-  void newLine();
   uint8_t nextTabPosition(const uint8_t cur_pos) const;
 
 private:

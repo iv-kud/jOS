@@ -1,22 +1,20 @@
 #include "display.h"
 LogLevel Display::m_thresholdLevel = LogLevel::Debug;
-uint8_t Display::s_currentLine = 0;
-
 Display::Display(LogLevel level, CHARS::CHAR_COLOR color)
     : m_currentLevel(level)
     , m_color(color)
     , m_vga(VGADriver::instance())
 {
   m_vga.setX(0);
-  m_vga.setY(s_currentLine);
+  m_vga.setY(m_vga.getY());
   m_vga.setColor(m_color);
 }
 
 Display::~Display() {
   if (m_used) {
-      s_currentLine++;
-      if (s_currentLine >= m_vga.getBuffHeight()) {
-          s_currentLine = 24;
+      m_vga.newLine();
+      if (m_vga.getY() >= m_vga.getBuffHeight()) {
+          m_vga.setY(24);
         }
     }
 }

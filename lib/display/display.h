@@ -16,7 +16,6 @@ public:
   static void setThreshold(LogLevel level);
 private:
   static LogLevel m_thresholdLevel;
-  static uint8_t s_currentLine;
 
   LogLevel m_currentLevel;
   CHARS::CHAR_COLOR m_color;
