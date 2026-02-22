@@ -47,10 +47,19 @@ Display &Display::operator<<(const char *ch)
 
 Display &Display::operator<<(int val)
 {
+  if (val < 0) {
+    *this << '-';
+    val = -val;
+  }
+  *this << static_cast<uint64_t>(val);
+}
+
+Display &Display::operator<<(uint64_t val)
+{
   if(val == 0)
     return *this;
-  int next = val / 10;
-  int digit = val % 10;
+  uint64_t next = val / 10;
+  uint64_t digit = val % 10;
 
   if(next != 0)
     *this << next;
