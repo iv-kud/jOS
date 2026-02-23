@@ -62,6 +62,7 @@ if(ARCH_LOWER STREQUAL "x86")
     message(STATUS "LibGCC directory: ${LIBGCC_DIR}")
     target_link_options(${TARGET_NAME} PRIVATE ${OS_LINKER_FLAGS})
     target_link_libraries(${TARGET_NAME} PRIVATE
+        bitset
         display
         -L${LIBGCC_DIR}
         -lgcc
