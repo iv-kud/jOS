@@ -6,9 +6,36 @@ template <uint8_t N>
 class bitset
 {
 public:
-  void set(uint8_t position, bool val = true);
-  bool test(uint8_t position);
-  uint64_t data();
+  bitset() {
+    for (int i = 0; i < (N + 7) / 8; ++i) {
+        m_data[i] = 0;
+      }
+  }
+
+  void set(uint8_t position, bool val = true){
+    uint8_t block = position / 8;
+    uint8_t bit = position % 8;
+    if (val) {
+        m_data[block] |= (1U << bit);
+      } else {
+        m_data[block] &= ~(1U << bit);
+      }
+  }
+
+  bool test(uint8_t position) {
+    uint8_t block = position / 8;
+    uint8_t bit = position % 8;
+    return (m_data[block] >> bit) & 1U;
+  }
+
+  uint64_t data() {
+    uint8_t size = (N + 7) / 8;
+    uint64_t value = 0;
+    for (uint8_t i = 0; i < size; i++)
+      value |= (uint64_t)m_data[i] << (8 * i);
+    return value;
+  }
+
   bool setToRange(uint8_t start, uint8_t end, uint64_t data);
   uint64_t getValueFromRange(uint8_t start, uint8_t end);
 private:
