@@ -36,7 +36,6 @@ public:
     return value;
   }
 
-  bool setToRange(uint8_t start, uint8_t end, uint64_t data);
   void setRange(const uint8_t start, const uint8_t end, uint64_t data);
   uint64_t getValueFromRange(uint8_t start, uint8_t end);
 private:
@@ -59,34 +58,6 @@ private:
   }
 };
 #endif
-
-template <uint8_t N>
-inline bool bitset<N>::setToRange(uint8_t start, uint8_t end, uint64_t data) {
-  if (start > end)
-    return false;
-  uint8_t startBlock = start / 8;
-  uint8_t endBlock = end / 8;
-  uint8_t startBit = start % 8;
-  uint8_t endBit = end % 8;
-  if (startBlock != endBlock)
-    {
-      m_data[startBlock] = fillStart(startBlock, startBit, data);
-      for (uint8_t i = startBlock + 1; i < endBlock; i++)
-        {
-          m_data[i] = data & 0xFF;
-          data >>= 8;
-        }
-      m_data[endBlock] = fillEnd(endBlock, endBit, data);
-
-      return true;
-    }  else if ((end - start + 1) <= 8) {
-      uint8_t mask = ((1U << (endBit - startBit + 1)) - 1) << startBit;
-      m_data[startBlock] = (m_data[startBlock] & ~mask) | ((data << startBit) & mask);
-      return true;
-    }
-
-  return false;
-}
 
 template<uint8_t N>
 inline void bitset<N>::setRange(const uint8_t start, const uint8_t end, uint64_t data)
