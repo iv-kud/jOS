@@ -71,7 +71,7 @@ inline void bitset<N>::setRange(const uint8_t start, const uint8_t end, uint64_t
   if (startBlock != endBlock)
     {
       m_data[startBlock] = fillStart(startBlock, startBit, data);
-      for (uint8_t i = startBlock + 1; i < endBlock; i++)
+      for (uint8_t i = startBlock + 1; i < endBlock; ++i)
         {
           m_data[i] = data & 0xFF;
           data >>= 8;
