@@ -19,8 +19,7 @@ else()
     message(FATAL_ERROR "Unknown architecture: ${ARCH_LOWER}. Supported: x86, arm")
 endif()
 
-include_directories(${CMAKE_SOURCE_DIR}/arch/x86/core)
-
+#include_directories(${CMAKE_SOURCE_DIR}/arch/x86/core)
 add_subdirectory(lib/)
 
 ##--ВОТ ТУТ СОМНИТЕЛЬНАЯ РЕАЛИЗАЦИЯ ПОДКЛЮЧЕНИЕ ФАЙЛОВ!!--##
@@ -62,10 +61,17 @@ if(ARCH_LOWER STREQUAL "x86")
     message(STATUS "LibGCC directory: ${LIBGCC_DIR}")
     target_link_options(${TARGET_NAME} PRIVATE ${OS_LINKER_FLAGS})
     target_link_libraries(${TARGET_NAME} PRIVATE
+        $<TARGET_OBJECTS:bitset>
         display
         -L${LIBGCC_DIR}
         -lgcc
     )
+    target_include_directories(${TARGET_NAME} PRIVATE
+        ${CMAKE_SOURCE_DIR}
+        ${CMAKE_SOURCE_DIR}/lib
+        ${CMAKE_SOURCE_DIR}/arch/x86
+    )
+
 endif()
 
 

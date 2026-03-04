@@ -1,9 +1,8 @@
-#include "../lib/display/display.h"
+#include "display/display.h"
+#include "table/GDT/global_descriptor.h"
 
 extern "C" void main() {
-  jDebug() << "Debug";                   // Серый
-  jInfo() << "Information";              // Зеленый
-  jWarning() << "Warning";               // Желтый
-  jError() << "Error!";                  // Красный
+  jInfo() << "Welcome to jOS: " << 0 <<'.'<< 0 <<'.' << 1 ;
+  GlobalDescriptor gdt;
   while(true);
 }
