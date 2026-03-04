@@ -8,6 +8,7 @@ if(DISPLAY_SRC)
     add_library(${LIBRARY_NAME} STATIC ${DISPLAY_SRC} ${DISPLAY_HDR})
     target_include_directories(${LIBRARY_NAME} PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_SOURCE_DIR}/arch/x86/core
     )
 else()
     message(STATUS "No display library sources found")
