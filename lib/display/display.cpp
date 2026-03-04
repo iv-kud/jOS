@@ -53,8 +53,10 @@ Display &Display::operator<<(int val)
 
 Display &Display::operator<<(uint64_t val)
 {
-  if(val == 0)
+  if(val == 0) {
+    *this<<'0';
     return *this;
+  }
   uint64_t next = val / 10;
   uint64_t digit = val % 10;
 
