@@ -9,7 +9,7 @@ namespace Table {
       uint16_t low_base;
       uint8_t mid_base;
       uint8_t access_byte;
-      uint8_t flags_limit; // flags and limit - each 4 bits
+      uint8_t flags_limit;
       uint8_t high_base;
     }__attribute__((packed));
   }
