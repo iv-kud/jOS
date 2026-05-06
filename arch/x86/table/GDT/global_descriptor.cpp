@@ -4,12 +4,11 @@
 
 GlobalDescriptor::GlobalDescriptor () {
   if (initTable()) {
-    jInfo() << "The table structure is correct";
-    setTable();
-  }
-  else {
+      jInfo() << "The table structure is correct";
+      setTable();
+    }
+  else
     jError() << "the table structure is incorrect";
-  }
 }
 
 bool GlobalDescriptor::initTable()
@@ -30,9 +29,8 @@ bool GlobalDescriptor::initTable()
   };
 
   for (int i = 0; i < 5; ++i) {
-      if (reinterpret_cast<uint64_t&>(m_table[i]) != expected[i]) {
-          return false;
-      }
+      if (reinterpret_cast<uint64_t&>(m_table[i]) != expected[i])
+        return false;
     }
   return true;
 }

@@ -17,13 +17,14 @@ VGADriver::VGADriver(const CHARS::CHAR_COLOR color)
 
 void VGADriver::scroll()
 {
-  for (int i = 0; i < m_width * (m_height -1); ++i) {
-      m_video_memory[i] = m_video_memory[i + m_width];
-    }
+  for (int i = 0; i < m_width * (m_height -1); ++i)
+    m_video_memory[i] = m_video_memory[i + m_width];
+
   uint16_t blank = ((uint8_t)m_color << 8) | ' ';
-  for (int i = m_width * (m_height - 1); i < m_height * m_width; ++i) {
-      m_video_memory[i] = blank;
-    }
+
+  for (int i = m_width * (m_height - 1); i < m_height * m_width; ++i)
+    m_video_memory[i] = blank;
+
   m_y = m_height - 1;
 }
 
@@ -58,23 +59,20 @@ uint8_t VGADriver::getY() const
 
 void VGADriver::setX(const uint8_t newX)
 {
-  if (m_x != newX) {
-      m_x = newX;
-    }
+  if (m_x != newX)
+    m_x = newX;
 }
 
 void VGADriver::setY(const uint8_t newY)
 {
-  if (m_y != newY) {
-      m_y = newY;
-    }
+  if (m_y != newY)
+    m_y = newY;
 }
 
 void VGADriver::setColor(const CHARS::CHAR_COLOR color)
 {
-  if (m_color != color) {
-      m_color = color;
-    }
+  if (m_color != color)
+    m_color = color;
 }
 
 uint8_t VGADriver::getBuffWidth() const
@@ -90,11 +88,10 @@ uint8_t VGADriver::getBuffHeight() const
 void VGADriver::newLine()
 {
   m_x = 0;
-  if (m_y < m_height - 1) {
-      ++m_y;
-    } else {
-      scroll();
-    }
+  if (m_y < m_height - 1)
+    ++m_y;
+  else
+    scroll();
 }
 
 void VGADriver::horizontalTab()

@@ -21,9 +21,10 @@ Display::~Display() {
 
 void Display::setThreshold(LogLevel level)
 {
-  if (m_thresholdLevel != level) {
-      m_thresholdLevel = level;
-    }
+  if (m_thresholdLevel == level)
+    return;
+
+  m_thresholdLevel = level;
 }
 
 Display &Display::operator<<(const char &ch)
@@ -37,9 +38,9 @@ Display &Display::operator<<(const char &ch)
 
 Display &Display::operator<<(const char *ch)
 {
-  for (int var = 0; ch[var] != '\0'; ++var) {
-      *this << ch[var];
-    }
+  for (int var = 0; ch[var] != '\0'; ++var)
+    *this << ch[var];
+
   return *this;
 }
 
@@ -56,14 +57,16 @@ Display &Display::operator<<(int val)
 Display &Display::operator<<(uint64_t val)
 {
   if(val == 0) {
-    *this<<'0';
-    return *this;
-  }
+      *this<<'0';
+      return *this;
+    }
+
   uint64_t next = val / 10;
   uint64_t digit = val % 10;
 
   if(next != 0)
     *this << next;
+
   *this << static_cast<char>('0' + digit);
   return *this;
 }

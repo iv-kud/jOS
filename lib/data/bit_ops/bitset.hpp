@@ -15,11 +15,11 @@ public:
   void set(uint8_t position, bool val = true){
     uint8_t block = position / 8;
     uint8_t bit = position % 8;
-    if (val) {
-        m_data[block] |= (1U << bit);
-      } else {
-        m_data[block] &= ~(1U << bit);
-      }
+
+    if (val)
+      m_data[block] |= (1U << bit);
+    else
+      m_data[block] &= ~(1U << bit);
   }
 
   bool test(uint8_t position) const {
@@ -33,6 +33,7 @@ public:
     uint64_t value = 0;
     for (uint8_t i = 0; i < size; i++)
       value |= (uint64_t)m_data[i] << (8 * i);
+
     return value;
   }
 
@@ -46,6 +47,7 @@ private:
     uint8_t rBits = 8 - bit;
     uint8_t mask = ((1U << rBits) - 1) << bit;
     uint8_t result = (m_data[block] & ~mask) | ((data << bit) & mask);
+
     return result;
   }
 
@@ -53,6 +55,7 @@ private:
     uint8_t lBits = bit + 1;
     uint8_t mask = (1U << lBits) - 1;
     uint8_t result = (m_data[block] & ~mask) | (data & mask);
+
     return result;
   }
 };
@@ -93,7 +96,8 @@ inline uint64_t bitset<N>::valueRange(uint8_t start, uint8_t end) const {
       uint8_t startBit = numBits % 8;
       uint64_t bit = (m_data[startBlock] >> startBit) & 1U;
       value |= (bit << i);
-  }
+    }
+
   return value;
 }
 

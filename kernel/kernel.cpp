@@ -4,5 +4,6 @@
 extern "C" void main() {
   jInfo() << "Welcome to jOS: " << 0 <<'.'<< 0 <<'.' << 1 ;
   GlobalDescriptor gdt;
+
   while(true);
 }
