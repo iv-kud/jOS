@@ -1,13 +1,11 @@
-add_library(bitset OBJECT)
+set(LIBRARY_NAME bitset)
 
-target_include_directories(bitset
-    PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}
+add_library(${LIBRARY_NAME} OBJECT
+    bitset.hpp
 )
 
-file(GLOB BITSET_HEADERS *.hpp)
-
-target_sources(bitset
-    PRIVATE
-        ${BITSET_HEADERS}
+target_include_directories(${LIBRARY_NAME}
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_SOURCE_DIR}/arch/x86/core
 )

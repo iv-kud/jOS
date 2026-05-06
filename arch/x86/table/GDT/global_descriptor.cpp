@@ -1,6 +1,6 @@
 #include "global_descriptor.h"
 #include "display/display.h"
-#include "data/bit_ops/bitset.hpp"
+#include "bitset.hpp"
 
 GlobalDescriptor::GlobalDescriptor () {
   if (initTable()) {

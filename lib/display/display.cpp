@@ -1,5 +1,7 @@
 #include "display.h"
+
 LogLevel Display::m_thresholdLevel = LogLevel::Debug;
+
 Display::Display(LogLevel level, CHARS::CHAR_COLOR color)
     : m_currentLevel(level)
       , m_color(color)

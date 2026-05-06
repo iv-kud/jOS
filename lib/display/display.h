@@ -1,7 +1,7 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 #include "types/data_types.h"
-#include "../../arch/x86/VGA/vgadriver.h"
+#include "VGA/vgadriver.h"
 #include "log_level.h"
 
 class Display
