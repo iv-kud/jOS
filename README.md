@@ -48,25 +48,45 @@ sudo apt install -y \
     grub-pc-bin \
     xorriso \
     mtools \
-    gdb
+    gdb \
+    unzip
 ```
 
 2. Install the i686-elf cross compiler.
+Ubuntu repositories usually do not provide `i686-elf-gcc`, so you need to build the cross-compiler manually.
 
-Ubuntu repositories usually do not provide `i686-elf-gcc`,
-so you need to build the cross-compiler manually.
-
-Example dependencies for building GCC and Binutils:
 ```bash
-sudo apt install -y \
-    bison \
-    flex \
-    libgmp3-dev \
-    libmpc-dev \
-    libmpfr-dev \
-    texinfo
-```
+mkdir -p ~/opt
 
+cd ~/opt
+
+git clone https://github.com/lordmilko/i686-elf-tools.git
+
+cd i686-elf-tools
+
+chmod +x i686-elf-tools.sh
+
+./i686-elf-tools.sh linux
+```
+Or download the release immediately (But first, сheck the system requirements for the compiler.)
+```bash
+mkdir -p ~/opt/i686-elf-tools
+cd ~/opt/i686-elf-tools
+
+wget https://github.com/lordmilko/i686-elf-tools/releases/download/15.2.0/i686-elf-tools-linux.zip
+
+unzip i686-elf-tools-linux.zip
+```
+3. Add the toolchain to your PATH:
+```bash
+echo 'export PATH="$HOME/opt/i686-elf-tools/bin:$PATH"' >> ~/.bashrc
+
+source ~/.bashrc
+```
+4. Check the compiler
+```bash
+i686-elf-gcc --version
+```
 ---
 
 # Build and run
