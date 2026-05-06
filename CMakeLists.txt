@@ -11,7 +11,6 @@ string(TOLOWER "${ARCH}" ARCH_LOWER)
 
 if(ARCH_LOWER STREQUAL "x86")
     set(TARGET_NAME "${PROJECT_NAME}-x86")
-    # set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/arch/x86/toolchain-x86.cmake)
     message(STATUS "Building for x86 architecture")
 elseif(ARCH_LOWER STREQUAL "arm")
     #TODO: Add build for ARM arch
@@ -19,34 +18,35 @@ else()
     message(FATAL_ERROR "Unknown architecture: ${ARCH_LOWER}. Supported: x86, arm")
 endif()
 
-#include_directories(${CMAKE_SOURCE_DIR}/arch/x86/core)
 add_subdirectory(lib/)
 
-##--ВОТ ТУТ СОМНИТЕЛЬНАЯ РЕАЛИЗАЦИЯ ПОДКЛЮЧЕНИЕ ФАЙЛОВ!!--##
-FILE(GLOB_RECURSE CPP_SOURCES
-    "kernel/*.cpp"
-    "arch/*.cpp"
+set(CPP_SOURCES
+    kernel/kernel.cpp
+    arch/x86/core/portIO/port.cpp
+    arch/x86/table/GDT/global_descriptor.cpp
+    arch/x86/VGA/vgadriver.cpp
 )
 
-FILE(GLOB_RECURSE ASM_SOURCES
-    "arch/*.asm"
+set(ASM_SOURCES
+    arch/x86/boot/boot.asm
+    arch/x86/core/portIO/port.asm
+    arch/x86/table/flush_table.asm
 )
 
-FILE(GLOB_RECURSE H_SOURCES
-    "kernel/*.h"
-    "arch/*.h"
-)
-
-FILE(GLOB_RECURSE HPP_SOURCES
-    "kernel/*.hpp"
-    "arch/*.hpp"
+set(HEDER_SOURCES
+    arch/x86/core/chars/chars_code.h
+    arch/x86/core/chars/vga_modecolor.h
+    arch/x86/core/portIO/port.h
+    arch/x86/core/types/data_types.h
+    arch/x86/table/segment_descriptor.h
+    arch/x86/table/GDT/global_descriptor.h
+    arch/x86/VGA/vgadriver.h
 )
 
 set(ALL_SOURCES
     ${CPP_SOURCES}
     ${ASM_SOURCES}
-    ${H_SOURCES}
-    ${HPP_SOURCES}
+    ${HEDER_SOURCES}
 )
 
 if(ARCH_LOWER STREQUAL "x86")
