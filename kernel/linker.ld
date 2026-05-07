@@ -1,9 +1,9 @@
 ENTRY(_start)
 
 PHDRS {
-    text PT_LOAD FLAGS(5);    /* R-X (Read + Execute) */
-    rodata PT_LOAD FLAGS(4);  /* R-- (Read-only) */
-    bss PT_LOAD FLAGS(6);     /* RW- (Read + Write) */
+    text   PT_LOAD FLAGS(5); /* R + X */
+    rodata PT_LOAD FLAGS(4); /* R */
+    data   PT_LOAD FLAGS(6); /* R + W */
 }
 
 SECTIONS {
@@ -13,24 +13,30 @@ SECTIONS {
         . = ALIGN(8);
         KEEP(*(.multiboot))
         *(.text)
+        *(.text.*)
     } :text
 
     .rodata : ALIGN(4K) {
         *(.rodata)
+        *(.rodata.*)
     } :rodata
 
     .data : ALIGN(4K) {
         *(.data)
-    } :rodata
+        *(.data.*)
+    } :data
 
     .bss : ALIGN(4K) {
         *(COMMON)
         *(.bss)
+        *(.bss.*)
         *(.stack)
-    } :bss
+    } :data
 
     /DISCARD/ : {
         *(.eh_frame)
+        *(.eh_frame_hdr)
         *(.note.gnu.property)
+        *(.comment)
     }
 }
