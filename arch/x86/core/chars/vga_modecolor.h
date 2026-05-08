@@ -1,7 +1,7 @@
 #ifndef VGA_MODECOLOR_H
 #define VGA_MODECOLOR_H
 namespace CHARS {
-  enum class CHAR_COLOR {
+enum class CHAR_COLOR {
     COLOR_BLACK        = 0x00,
     COLOR_BLUE         = 0x01,
     COLOR_GREEN        = 0x02,
@@ -18,6 +18,6 @@ namespace CHARS {
     COLOR_LIGHT_PURPLE = 0x0D,
     COLOR_YELLOW       = 0x0E,
     COLOR_WHITE        = 0x0F,
-  };
+};
 }
 #endif // VGA_MODECOLOR_H

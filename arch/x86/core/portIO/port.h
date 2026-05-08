@@ -5,8 +5,8 @@
 class Port
 {
 public:
-  static void write_port(uint16_t port, uint8_t value);
-  static uint8_t read_port(uint16_t port);
+    static void write_port(uint16_t port, uint8_t value);
+    static uint8_t read_port(uint16_t port);
 };
 
 extern "C" void write_byte(uint16_t port, uint8_t data);
