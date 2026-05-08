@@ -18,6 +18,12 @@ else()
     message(FATAL_ERROR "Unknown architecture: ${ARCH_LOWER}. Supported: x86, arm")
 endif()
 
+if (NOT DEFINED ENABLE_CLANG_FORMATTING)
+    set(ENABLE_CLANG_FORMATTING ON)
+endif()
+include(clang-format.cmake)
+
+
 add_subdirectory(lib/)
 
 set(CPP_SOURCES
