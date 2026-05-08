@@ -8,7 +8,10 @@
 
 1. Install the basic build tools and dependencies:
 ```bash
-sudo pacman -S --needed base-devel git cmake nasm
+sudo pacman -Syu
+```
+```bash
+sudo pacman -S --needed base-devel git cmake nasm clang
 ```
 
 2. Install the i686-elf cross compiler and binutils:
@@ -49,7 +52,8 @@ sudo apt install -y \
     xorriso \
     mtools \
     gdb \
-    unzip
+    unzip \
+    clang-format
 ```
 
 2. Install the i686-elf cross compiler.
