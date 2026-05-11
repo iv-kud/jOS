@@ -9,6 +9,7 @@ if (ENABLE_CLANG_FORMATTING)
             ${CMAKE_SOURCE_DIR}/kernel/*.cpp
             ${CMAKE_SOURCE_DIR}/lib/*.h
             ${CMAKE_SOURCE_DIR}/lib/*.hpp
+            ${CMAKE_SOURCE_DIR}/lib/*.cpp
     )
 
     if (ALL_SOURCE_FILES)
