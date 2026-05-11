@@ -40,7 +40,7 @@ void InterruptDescriptor::setGate(const uint8_t offset, const uint32_t handler, 
 bool InterruptDescriptor::checkGate(const uint8_t offset, const uint32_t handler, const uint8_t type) const
 {
     return m_table[offset].low_offset == (handler & 0xFFFF) && m_table[offset].segment_selector == CODE_SEGMENT && m_table[offset].zero == 0 && m_table[offset].gate_type == type
-           && m_table[offset].high_offset;
+           && m_table[offset].high_offset == (handler & 0xFFFF0000) >> 16;
 }
 
 void InterruptDescriptor::setTable()
