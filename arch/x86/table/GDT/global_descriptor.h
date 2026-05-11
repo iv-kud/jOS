@@ -1,6 +1,6 @@
 #ifndef GLOBAL_DESCRIPTOR_H
 #define GLOBAL_DESCRIPTOR_H
-#include "../segment_descriptor.h"
+#include "arch/x86/table/segment_descriptor.h"
 
 class GlobalDescriptor
 {
@@ -10,6 +10,7 @@ public:
 private:
     bool initTable();
     void setTable();
+    uint64_t makeSegment(const uint8_t access) const;
     uint64_t kernelCodeSegment() const;
     uint64_t kernelDataSegment() const;
     uint64_t userCodeSegment() const;

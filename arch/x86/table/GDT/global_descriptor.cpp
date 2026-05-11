@@ -31,58 +31,22 @@ bool GlobalDescriptor::initTable()
 
 uint64_t GlobalDescriptor::kernelCodeSegment() const
 {
-    bitset<64> codeSegment;
-
-    codeSegment.setRange(16, 39, 0);
-    codeSegment.setRange(56, 63, 0);
-    codeSegment.setRange(0, 15, 0xFFFF);
-    codeSegment.setRange(48, 51, 0xF);
-    codeSegment.setRange(40, 47, 0x9A);
-    codeSegment.setRange(52, 55, 0xC);
-
-    return codeSegment.data();
+    return makeSegment(0x9A);
 }
 
 uint64_t GlobalDescriptor::kernelDataSegment() const
 {
-    bitset<64> dataSegment;
-
-    dataSegment.setRange(16, 39, 0);
-    dataSegment.setRange(56, 63, 0);
-    dataSegment.setRange(0, 15, 0xFFFF);
-    dataSegment.setRange(48, 51, 0xF);
-    dataSegment.setRange(40, 47, 0x92);
-    dataSegment.setRange(52, 55, 0xC);
-
-    return dataSegment.data();
+    return makeSegment(0x92);
 }
 
 uint64_t GlobalDescriptor::userCodeSegment() const
 {
-    bitset<64> codeSegment;
-
-    codeSegment.setRange(16, 39, 0);
-    codeSegment.setRange(56, 63, 0);
-    codeSegment.setRange(0, 15, 0xFFFF);
-    codeSegment.setRange(48, 51, 0xF);
-    codeSegment.setRange(40, 47, 0xFA);
-    codeSegment.setRange(52, 55, 0xC);
-
-    return codeSegment.data();
+    return makeSegment(0xFA);
 }
 
 uint64_t GlobalDescriptor::userdataSegment() const
 {
-    bitset<64> dataSegment;
-
-    dataSegment.setRange(16, 39, 0);
-    dataSegment.setRange(56, 63, 0);
-    dataSegment.setRange(0, 15, 0xFFFF);
-    dataSegment.setRange(48, 51, 0xF);
-    dataSegment.setRange(40, 47, 0xF2);
-    dataSegment.setRange(52, 55, 0xC);
-
-    return dataSegment.data();
+    return makeSegment(0xF2);
 }
 
 uint64_t GlobalDescriptor::taskStateSegment() const
@@ -98,4 +62,18 @@ void GlobalDescriptor::setTable()
     gdtr.base  = (uint32_t) m_table;
 
     flush_gdt(&gdtr);
+}
+
+uint64_t GlobalDescriptor::makeSegment(const uint8_t access) const
+{
+    bitset<64> segment;
+
+    segment.setRange(0, 15, 0xFFFF);
+    segment.setRange(16, 39, 0);
+    segment.setRange(40, 47, access);
+    segment.setRange(48, 51, 0xF);
+    segment.setRange(52, 55, 0xC);
+    segment.setRange(56, 63, 0);
+
+    return segment.data();
 }
