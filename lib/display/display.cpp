@@ -4,85 +4,90 @@ LogLevel Display::m_thresholdLevel = LogLevel::Debug;
 
 Display::Display(LogLevel level, CHARS::CHAR_COLOR color)
     : m_currentLevel(level)
-      , m_color(color)
-      , m_vga(VGADriver::instance())
+    , m_color(color)
+    , m_vga(VGADriver::instance())
 {
-  m_vga.setX(0);
-  m_vga.setY(m_vga.getY());
-  m_vga.setColor(m_color);
+    m_vga.setX(0);
+    m_vga.setY(m_vga.getY());
+    m_vga.setColor(m_color);
 }
 
-Display::~Display() {
-  if (m_used) {
-      m_vga.newLine();
-      m_vga.moveCursor();
+Display::~Display()
+{
+    if (m_used) {
+        m_vga.newLine();
+        m_vga.moveCursor();
     }
 }
 
 void Display::setThreshold(LogLevel level)
 {
-  if (m_thresholdLevel == level)
-    return;
+    if (m_thresholdLevel == level)
+        return;
 
-  m_thresholdLevel = level;
+    m_thresholdLevel = level;
 }
 
 Display &Display::operator<<(const char &ch)
 {
-  if (m_currentLevel >= m_thresholdLevel) {
-      m_used = true;
-      m_vga.print(ch);
+    if (m_currentLevel >= m_thresholdLevel) {
+        m_used = true;
+        m_vga.print(ch);
     }
-  return *this;
+    return *this;
 }
 
 Display &Display::operator<<(const char *ch)
 {
-  for (int var = 0; ch[var] != '\0'; ++var)
-    *this << ch[var];
+    for (int var = 0; ch[var] != '\0'; ++var)
+        *this << ch[var];
 
-  return *this;
+    return *this;
 }
 
 Display &Display::operator<<(int val)
 {
-  if (val < 0) {
-      *this << '-';
-      val = -val;
+    if (val < 0) {
+        *this << '-';
+        val = -val;
     }
-  *this << static_cast<uint64_t>(val);
-  return *this;
+    *this << static_cast<uint64_t>(val);
+    return *this;
 }
 
 Display &Display::operator<<(uint64_t val)
 {
-  if(val == 0) {
-      *this<<'0';
-      return *this;
+    if (val == 0) {
+        *this << '0';
+        return *this;
     }
 
-  uint64_t next = val / 10;
-  uint64_t digit = val % 10;
+    uint64_t next  = val / 10;
+    uint64_t digit = val % 10;
 
-  if(next != 0)
-    *this << next;
+    if (next != 0)
+        *this << next;
 
-  *this << static_cast<char>('0' + digit);
-  return *this;
+    *this << static_cast<char>('0' + digit);
+    return *this;
 }
 
-Display jDebug() {
-  return Display(LogLevel::Debug, CHARS::CHAR_COLOR::COLOR_DARK_GRAY);
+Display jDebug()
+{
+    return Display(LogLevel::Debug, CHARS::CHAR_COLOR::COLOR_DARK_GRAY);
 }
 
-Display jInfo() {
-  return Display(LogLevel::Info, CHARS::CHAR_COLOR::COLOR_WHITE);
+Display jInfo()
+{
+    return Display(LogLevel::Info, CHARS::CHAR_COLOR::COLOR_WHITE);
 }
 
-Display jWarning() {
-  return Display(LogLevel::Warning, CHARS::CHAR_COLOR::COLOR_YELLOW);
+Display jWarning()
+{
+    return Display(LogLevel::Warning, CHARS::CHAR_COLOR::COLOR_YELLOW);
 }
 
-Display jError() {
-  return Display(LogLevel::Error, CHARS::CHAR_COLOR::COLOR_RED);
+Display jError()
+{
+    return Display(LogLevel::Error, CHARS::CHAR_COLOR::COLOR_RED);
 }

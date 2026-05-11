@@ -2,8 +2,7 @@
 #define BITSET_HPP
 #include "types/data_types.h"
 
-template<uint8_t N>
-class bitset
+template <uint8_t N> class bitset
 {
 public:
     bitset()
@@ -66,8 +65,7 @@ private:
     }
 };
 
-template<uint8_t N>
-inline void bitset<N>::setRange(const uint8_t start, const uint8_t end, uint64_t data)
+template <uint8_t N> inline void bitset<N>::setRange(const uint8_t start, const uint8_t end, uint64_t data)
 {
     if (start > end || end >= N)
         return;
@@ -89,8 +87,7 @@ inline void bitset<N>::setRange(const uint8_t start, const uint8_t end, uint64_t
     }
 }
 
-template<uint8_t N>
-inline uint64_t bitset<N>::valueRange(uint8_t start, uint8_t end) const
+template <uint8_t N> inline uint64_t bitset<N>::valueRange(uint8_t start, uint8_t end) const
 {
     if (start > end || end >= N)
         return 0;
