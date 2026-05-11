@@ -6,7 +6,6 @@ void *memset(void *dest, int value, uint32_t count)
 
     while (count > 0) {
         *p = static_cast<uint8_t>(value);
-        ;
         p++;
         --count;
     }
