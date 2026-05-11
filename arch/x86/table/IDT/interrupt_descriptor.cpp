@@ -13,7 +13,7 @@ InterruptDescriptor::InterruptDescriptor()
 
 bool InterruptDescriptor::initTable()
 {
-    memset(&m_table, 0, sizeof(m_table));
+    memset(m_table, 0, sizeof(m_table));
     for (uint16_t i = 0; i < 256; ++i) {
         if (m_table[i].low_offset != 0 || m_table[i].segment_selector != 0 || m_table[i].zero != 0 || m_table[i].gate_type != 0 || m_table[i].high_offset != 0) {
             return false;
