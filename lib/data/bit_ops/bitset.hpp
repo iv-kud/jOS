@@ -6,7 +6,7 @@
 template <uint8_t N> class bitset
 {
 public:
-    bitset() { memset(&m_data, 0, sizeof(m_data)); }
+    bitset() { memset(m_data, 0, sizeof(m_data)); }
 
     void set(uint8_t position, bool val = true)
     {
