@@ -7,5 +7,9 @@ add_library(${LIBRARY_NAME} OBJECT
 target_include_directories(${LIBRARY_NAME}
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${CMAKE_SOURCE_DIR}/arch/x86/core
+)
+
+target_link_libraries(${LIBRARY_NAME}
+    PUBLIC
+        memory
 )
