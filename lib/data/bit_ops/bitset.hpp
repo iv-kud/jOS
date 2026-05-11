@@ -1,16 +1,12 @@
 #ifndef BITSET_HPP
 #define BITSET_HPP
+#include "memory.h"
 #include "types/data_types.h"
 
 template <uint8_t N> class bitset
 {
 public:
-    bitset()
-    {
-        for (int i = 0; i < (N + 7) / 8; ++i) {
-            m_data[i] = 0;
-        }
-    }
+    bitset() { memset(&m_data, 0, sizeof(m_data)); }
 
     void set(uint8_t position, bool val = true)
     {
