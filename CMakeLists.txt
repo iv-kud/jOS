@@ -30,6 +30,7 @@ set(CPP_SOURCES
     kernel/kernel.cpp
     arch/x86/core/portIO/port.cpp
     arch/x86/table/GDT/global_descriptor.cpp
+    arch/x86/table/IDT/interrupt_descriptor.cpp
     arch/x86/VGA/vgadriver.cpp
 )
 
@@ -46,6 +47,7 @@ set(HEDER_SOURCES
     arch/x86/core/types/data_types.h
     arch/x86/table/segment_descriptor.h
     arch/x86/table/GDT/global_descriptor.h
+    arch/x86/table/IDT/interrupt_descriptor.h
     arch/x86/VGA/vgadriver.h
 )
 
@@ -69,6 +71,7 @@ if(ARCH_LOWER STREQUAL "x86")
     target_link_libraries(${TARGET_NAME} PRIVATE
         display
         bitset
+        memory
         -L${LIBGCC_DIR}
         -lgcc
     )
