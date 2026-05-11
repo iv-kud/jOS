@@ -2,6 +2,7 @@
 #include "types/data_types.h"
 
 namespace Table {
+
 namespace GDT {
 struct Segment_Descriptor
 {
@@ -13,6 +14,17 @@ struct Segment_Descriptor
     uint8_t high_base;
 } __attribute__((packed));
 } // namespace GDT
+
+namespace IDT {
+struct Segment_Descriptor
+{
+    uint16_t low_offset;
+    uint16_t segment_selector;
+    uint8_t zero;
+    uint8_t gate_type;
+    uint16_t high_offset;
+};
+} // namespace IDT
 
 struct Descriptor
 {

@@ -1,6 +1,7 @@
 section .text
 
 global flush_gdt
+global flush_idt
 
 flush_gdt:
     mov eax, [esp + 4]
@@ -13,4 +14,9 @@ flush_gdt:
     mov fs, ax
     mov gs, ax
     mov ss, ax
+    ret
+
+flush_idt:
+    mov eax, [esp + 4]
+    lidt [eax]
     ret
