@@ -5,10 +5,10 @@
 InterruptDescriptor::InterruptDescriptor()
 {
     if (initTable()) {
-        jInfo() << "The table structure is correct";
+        jInfo() << "[IDT] The table structure is correct";
         setTable();
     } else
-        jError() << "the table structure is incorrect";
+        jError() << "[IDT] The table structure is incorrect";
 }
 
 bool InterruptDescriptor::initTable()

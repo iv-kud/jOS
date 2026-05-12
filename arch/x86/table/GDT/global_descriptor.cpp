@@ -5,10 +5,10 @@
 GlobalDescriptor::GlobalDescriptor()
 {
     if (initTable()) {
-        jInfo() << "The table structure is correct";
+        jInfo() << "[GDT] The table structure is correct";
         setTable();
     } else
-        jError() << "the table structure is incorrect";
+        jError() << "[GDT] The table structure is incorrect";
 }
 
 bool GlobalDescriptor::initTable()

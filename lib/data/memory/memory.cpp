@@ -2,11 +2,11 @@
 
 void *memset(void *dest, int value, uint32_t count)
 {
-    uint8_t *p = static_cast<uint8_t *>(dest);
+    uint8_t *d = static_cast<uint8_t *>(dest);
 
     while (count > 0) {
-        *p = static_cast<uint8_t>(value);
-        p++;
+        *d = static_cast<uint8_t>(value);
+        d++;
         --count;
     }
 
