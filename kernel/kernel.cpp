@@ -1,11 +1,13 @@
 #include "display/display.h"
 #include "table/GDT/global_descriptor.h"
+#include "table/IDT/interrupt_descriptor.h"
 
 extern "C" void main()
 {
     jInfo() << "Welcome to jOS: " << 0 << '.' << 0 << '.' << 1;
     GlobalDescriptor gdt;
+    InterruptDescriptor idt;
 
-    while (true)
-        ;
+    int c = 1 / 0;
+    while (true);
 }
