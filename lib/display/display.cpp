@@ -59,13 +59,17 @@ void Display::printDec(uint64_t val)
         return;
     }
 
-    uint64_t next  = val / 10;
-    uint64_t digit = val % 10;
+    char buffer[20] = {};
+    int i           = 0;
+    while (val > 0) {
+        uint64_t digit = val % 10;
+        buffer[i++]    = '0' + digit;
+        val            = val / 10;
+    }
 
-    if (next != 0)
-        printDec(next);
-
-    *this << static_cast<char>('0' + digit);
+    while (i > 0) {
+        *this << buffer[--i];
+    }
 }
 
 Display &Display::operator<<(const char &ch)
