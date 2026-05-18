@@ -28,6 +28,46 @@ void Display::setThreshold(LogLevel level)
     m_thresholdLevel = level;
 }
 
+void Display::printHex(uint64_t val)
+{
+    *this << "0x";
+
+    if (val == 0) {
+        *this << '0';
+        return;
+    }
+
+    const char hexDigids[] = "0123456789ABCDEF";
+    char buffer[16]        = {};
+    int i                  = 0;
+
+    while (val > 0) {
+        int remainder = val % 16;
+        buffer[i++]   = hexDigids[remainder];
+        val           = val / 16;
+    }
+
+    while (i > 0) {
+        *this << buffer[--i];
+    }
+}
+
+void Display::printDec(uint64_t val)
+{
+    if (val == 0) {
+        *this << '0';
+        return;
+    }
+
+    uint64_t next  = val / 10;
+    uint64_t digit = val % 10;
+
+    if (next != 0)
+        printDec(next);
+
+    *this << static_cast<char>('0' + digit);
+}
+
 Display &Display::operator<<(const char &ch)
 {
     if (m_currentLevel >= m_thresholdLevel) {
@@ -57,18 +97,20 @@ Display &Display::operator<<(int val)
 
 Display &Display::operator<<(uint64_t val)
 {
-    if (val == 0) {
-        *this << '0';
-        return *this;
+    if (m_base == NumberBase::Hex) {
+        printHex(val);
+    } else {
+        printDec(val);
     }
 
-    uint64_t next  = val / 10;
-    uint64_t digit = val % 10;
+    return *this;
+}
 
-    if (next != 0)
-        *this << next;
+Display &Display::operator<<(NumberBase base)
+{
+    if (m_base != base)
+        m_base = base;
 
-    *this << static_cast<char>('0' + digit);
     return *this;
 }
 

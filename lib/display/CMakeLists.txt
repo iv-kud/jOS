@@ -6,7 +6,7 @@ set(DISPLAY_SRC
 
 set(DISPLAY_HDR
     display.h
-    log_level.h
+    display_types.h
 )
 
 add_library(${LIBRARY_NAME} STATIC
