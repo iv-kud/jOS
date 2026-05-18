@@ -5,7 +5,7 @@ LogLevel Display::m_thresholdLevel = LogLevel::Debug;
 Display::Display(LogLevel level, CHARS::CHAR_COLOR color)
     : m_currentLevel(level)
     , m_color(color)
-    , m_base(NumberBase::Dex)
+    , m_base(NumberBase::Dec)
     , m_vga(VGADriver::instance())
 {
     m_vga.setX(0);
