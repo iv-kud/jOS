@@ -5,5 +5,5 @@ InterruptHandler::InterruptHandler() {}
 
 void isr_handler(Registers reg)
 {
-    jInfo() << "Inerrupt: " << (int) reg.int_no;
+    jInfo() << "Inerrupt: " << NumberBase::Hex << (uint64_t) reg.int_no;
 }
