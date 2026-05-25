@@ -1,4 +1,5 @@
 #include "interrupt_descriptor.h"
+#include "core/portIO/port.h"
 #include "display/display.h"
 #include "lib/data/memory/memory.h"
 
@@ -25,6 +26,7 @@ bool InterruptDescriptor::initTable()
         if (!checkGate(i, (uint32_t) isrHandlers[i], INTERRUPT_GATE))
             return false;
     }
+    picRemap();
     return true;
 }
 
@@ -41,6 +43,24 @@ bool InterruptDescriptor::checkGate(const uint8_t offset, const uint32_t handler
 {
     return m_table[offset].low_offset == (handler & 0xFFFF) && m_table[offset].segment_selector == CODE_SEGMENT && m_table[offset].zero == 0 && m_table[offset].gate_type == type
            && m_table[offset].high_offset == (handler & 0xFFFF0000) >> 16;
+}
+
+void InterruptDescriptor::picRemap()
+{
+    Port::write_port(MASTER_PIC_COMMAND, ICW1);
+    Port::write_port(SLAVE_PIC_COMMAND, ICW1);
+
+    Port::write_port(MASTER_PIC_DATA, MASTER_ICW2);
+    Port::write_port(SLAVE_PIC_DATA, SLAVE_ICW2);
+
+    Port::write_port(MASTER_PIC_DATA, MASTER_ICW3);
+    Port::write_port(SLAVE_PIC_DATA, SLAVE_ICW3);
+
+    Port::write_port(MASTER_PIC_DATA, ICW4);
+    Port::write_port(SLAVE_PIC_DATA, ICW4);
+
+    Port::write_port(MASTER_PIC_DATA, OCW1);
+    Port::write_port(SLAVE_PIC_DATA, OCW1);
 }
 
 void InterruptDescriptor::setTable()
