@@ -8,6 +8,6 @@ extern "C" void main()
     GlobalDescriptor gdt;
     InterruptDescriptor idt;
 
-    int c = 1 / 0;
-    while (true);
+    while (true)
+        ;
 }
