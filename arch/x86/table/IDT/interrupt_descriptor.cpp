@@ -20,13 +20,13 @@ bool InterruptDescriptor::initTable()
             return false;
         }
     }
+    picRemap();
 
-    for (uint8_t i = 0; i < 32; ++i) {
+    for (uint8_t i = 0; i < 48; ++i) {
         setGate(i, (uint32_t) isrHandlers[i], INTERRUPT_GATE);
         if (!checkGate(i, (uint32_t) isrHandlers[i], INTERRUPT_GATE))
             return false;
     }
-    picRemap();
     return true;
 }
 

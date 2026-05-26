@@ -34,7 +34,7 @@ private:
     Table::IDT::Segment_Descriptor m_table[256];
 };
 extern "C" void flush_idt(Table::Descriptor *idt_ptr);
-
+/*ISR*/
 extern "C" void isr0();
 extern "C" void isr1();
 extern "C" void isr2();
@@ -67,8 +67,26 @@ extern "C" void isr28();
 extern "C" void isr29();
 extern "C" void isr30();
 extern "C" void isr31();
+/*IRQ*/
+extern "C" void irq0();
+extern "C" void irq1();
+extern "C" void irq2();
+extern "C" void irq3();
+extern "C" void irq4();
+extern "C" void irq5();
+extern "C" void irq6();
+extern "C" void irq7();
+extern "C" void irq8();
+extern "C" void irq9();
+extern "C" void irq10();
+extern "C" void irq11();
+extern "C" void irq12();
+extern "C" void irq13();
+extern "C" void irq14();
+extern "C" void irq15();
 
-using InterruptHandler                  = void (*)();
-static InterruptHandler isrHandlers[32] = {isr0,  isr1,  isr2,  isr3,  isr4,  isr5,  isr6,  isr7,  isr8,  isr9,  isr10, isr11, isr12, isr13, isr14, isr15,
-                                           isr16, isr17, isr18, isr19, isr20, isr21, isr22, isr23, isr24, isr25, isr26, isr27, isr28, isr29, isr30, isr31};
+using InterruptHandler = void (*)();
+static InterruptHandler isrHandlers[48]
+    = {isr0,  isr1,  isr2,  isr3,  isr4,  isr5,  isr6,  isr7,  isr8, isr9, isr10, isr11, isr12, isr13, isr14, isr15, isr16, isr17, isr18, isr19, isr20, isr21, isr22, isr23,
+       isr24, isr25, isr26, isr27, isr28, isr29, isr30, isr31, irq0, irq1, irq2,  irq3,  irq4,  irq5,  irq6,  irq7,  irq8,  irq9,  irq10, irq11, irq12, irq13, irq14, irq15};
 #endif // INTERRUPT_DESCRIPTOR_H

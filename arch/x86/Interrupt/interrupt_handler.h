@@ -17,4 +17,6 @@ public:
 };
 
 extern "C" void isr_handler(Registers reg);
+extern "C" void irq_handler(Registers reg);
+
 #endif // INTERRUPT_HANDLER_H
