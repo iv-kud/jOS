@@ -23,8 +23,8 @@ bool InterruptDescriptor::initTable()
     picRemap();
 
     for (uint8_t i = 0; i < 48; ++i) {
-        setGate(i, (uint32_t) isrHandlers[i], INTERRUPT_GATE);
-        if (!checkGate(i, (uint32_t) isrHandlers[i], INTERRUPT_GATE))
+        setGate(i, (uint32_t) interruptStubs[i], INTERRUPT_GATE);
+        if (!checkGate(i, (uint32_t) interruptStubs[i], INTERRUPT_GATE))
             return false;
     }
     return true;
