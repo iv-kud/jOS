@@ -10,11 +10,21 @@ InterruptHandler &InterruptHandler::instance()
 
 isr_t InterruptHandler::getHandler(uint8_t num)
 {
+    if (num < 0 || num > 255) {
+        jWarning() << "Invalid interrupt number";
+        return nullptr;
+    }
+
     return m_handlers[num];
 }
 
 void InterruptHandler::registerHandlers(const uint8_t num, const isr_t handler)
 {
+    if (num < 0 || num > 255) {
+        jWarning() << "Invalid interrupt number";
+        return;
+    }
+
     m_handlers[num] = handler;
 }
 
