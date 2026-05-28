@@ -13,21 +13,22 @@ struct Registers
     uint32_t int_no, err_code;
     uint32_t eip, cs, eflags, useresp, ss;
 };
-using isr_t = void (*)(Registers);
+
+class IRQDriver;
 
 class InterruptHandler
 {
 public:
     static InterruptHandler &instance();
+    IRQDriver *getHandler(uint8_t num) const;
+    void registerHandlers(const uint8_t num, IRQDriver *driver);
 
-    isr_t getHandler(uint8_t num) const;
-    void registerHandlers(const uint8_t num, const isr_t handler);
     InterruptHandler(const InterruptHandler &)            = delete;
     InterruptHandler &operator=(const InterruptHandler &) = delete;
 
 private:
-    InterruptHandler()    = default;
-    isr_t m_handlers[256] = {nullptr};
+    InterruptHandler()        = default;
+    IRQDriver *m_drivers[256] = {nullptr};
 };
 
 extern "C" void isr_handler(Registers reg);
