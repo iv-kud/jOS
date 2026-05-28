@@ -4,7 +4,7 @@ global read_byte
 global write_byte
 
 read_byte:
-    mov eax, [esp + 4]
+    mov edx, [esp + 4]
     in al, dx
     ret
 
