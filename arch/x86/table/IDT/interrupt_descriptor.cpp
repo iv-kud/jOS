@@ -20,11 +20,17 @@ bool InterruptDescriptor::initTable()
             return false;
         }
     }
-    picRemap();
 
-    for (uint8_t i = 0; i < 48; ++i) {
-        setGate(i, (uint32_t) interruptStubs[i], INTERRUPT_GATE);
-        if (!checkGate(i, (uint32_t) interruptStubs[i], INTERRUPT_GATE))
+    for (uint8_t i = 0; i < 32; ++i) {
+        setGate(i, (uint32_t) isrStubs[i], INTERRUPT_GATE);
+        if (!checkGate(i, (uint32_t) isrStubs[i], INTERRUPT_GATE))
+            return false;
+    }
+    picRemap();
+    for (uint8_t i = 0; i < 16; ++i) {
+        setGate(32 + i, (uint32_t) irqStubs[i], INTERRUPT_GATE);
+
+        if (!checkGate(32 + i, (uint32_t) irqStubs[i], INTERRUPT_GATE))
             return false;
     }
     return true;
