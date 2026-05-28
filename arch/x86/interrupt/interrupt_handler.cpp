@@ -27,13 +27,8 @@ void isr_handler(Registers reg)
 void irq_handler(Registers reg)
 {
     IRQDriver *driver = InterruptHandler::instance().getHandler(reg.int_no);
-
-    jDebug() << "Interrupt vector: " << NumberBase::Hex << (uint64_t) reg.int_no;
-
     if (driver)
         driver->handleInterrupt(reg);
-    else
-        jWarning() << "No driver";
 
     if (reg.int_no >= 40)
         Port::write_port(SLAVE_PIC_COMMAND, PIC_EOI);
