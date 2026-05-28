@@ -1,7 +1,10 @@
 #ifndef INTERRUPT_HANDLER_H
 #define INTERRUPT_HANDLER_H
 #include "types/data_types.h"
-#define OCW2 0x20
+
+#define MASTER_PIC_COMMAND 0x20
+#define SLAVE_PIC_COMMAND 0xA0
+#define PIC_EOI 0x20
 
 struct Registers
 {
@@ -15,12 +18,16 @@ using isr_t = void (*)(Registers);
 class InterruptHandler
 {
 public:
-    InterruptHandler() = default;
-    static isr_t getHandler(uint8_t num);
-    static void registerHandlers(const uint8_t num, const isr_t handler);
+    static InterruptHandler &instance();
+
+    isr_t getHandler(uint8_t num);
+    void registerHandlers(const uint8_t num, const isr_t handler);
+    InterruptHandler(const InterruptHandler &)            = delete;
+    InterruptHandler &operator=(const InterruptHandler &) = delete;
 
 private:
-    static isr_t m_handlers[256];
+    InterruptHandler()    = default;
+    isr_t m_handlers[256] = {nullptr};
 };
 
 extern "C" void isr_handler(Registers reg);
