@@ -8,7 +8,7 @@ InterruptHandler &InterruptHandler::instance()
     return handler;
 }
 
-isr_t InterruptHandler::getHandler(uint8_t num)
+isr_t InterruptHandler::getHandler(uint8_t num) const
 {
     if (num < 0 || num > 255) {
         jWarning() << "Invalid interrupt number";

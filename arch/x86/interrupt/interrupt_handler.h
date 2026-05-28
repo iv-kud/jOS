@@ -20,7 +20,7 @@ class InterruptHandler
 public:
     static InterruptHandler &instance();
 
-    isr_t getHandler(uint8_t num);
+    isr_t getHandler(uint8_t num) const;
     void registerHandlers(const uint8_t num, const isr_t handler);
     InterruptHandler(const InterruptHandler &)            = delete;
     InterruptHandler &operator=(const InterruptHandler &) = delete;
