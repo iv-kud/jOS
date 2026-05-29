@@ -33,7 +33,7 @@ set(CPP_SOURCES
     arch/x86/table/IDT/interrupt_descriptor.cpp
     arch/x86/interrupt/interrupt_handler.cpp
     arch/x86/VGA/vgadriver.cpp
-    # arch/x86/drivers/pitdriver.cpp
+    arch/x86/drivers/pitdriver.cpp
     arch/x86/drivers/keyboarddriver.cpp
 )
 
@@ -55,7 +55,7 @@ set(HEDER_SOURCES
     arch/x86/interrupt/interrupt_handler.h
     arch/x86/VGA/vgadriver.h
     arch/x86/drivers/irqdriver.h
-    # arch/x86/drivers/pitdriver.h
+    arch/x86/drivers/pitdriver.h
     arch/x86/drivers/keyboarddriver.h
 )
 
