@@ -1,13 +1,23 @@
-#include "display/display.h"
+#include "arch/x86/core/portIO/port.h"
+#include "drivers/keyboarddriver.h"
+#include "drivers/pitdriver.h"
 #include "table/GDT/global_descriptor.h"
 #include "table/IDT/interrupt_descriptor.h"
 
 extern "C" void main()
 {
-    jInfo() << "Welcome to jOS: " << 0 << '.' << 0 << '.' << 1;
     GlobalDescriptor gdt;
     InterruptDescriptor idt;
 
-    int c = 1 / 0;
-    while (true);
+    static KeyboardDriver keyboard;
+    static PITDriver pit;
+    keyboard.init();
+    pit.init();
+    Port::write_port(0x21, 0xFC);
+    Port::write_port(0xA1, 0xFF);
+
+    asm volatile("sti");
+
+    while (true)
+        ;
 }
