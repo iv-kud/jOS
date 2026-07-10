@@ -36,10 +36,10 @@ uint16_t VGADriver::cursorPosition() const
 
 void VGADriver::moveCursor()
 {
-    Port::write_port(static_cast<uint16_t>(Command::CRTC::INDEX_PORT), m_highByteCursorPos);
-    Port::write_port(static_cast<uint16_t>(Command::CRTC::DATA_PORT), cursorPosition() >> 8);
-    Port::write_port(static_cast<uint16_t>(Command::CRTC::INDEX_PORT), m_lowByteCursorPos);
-    Port::write_port(static_cast<uint16_t>(Command::CRTC::DATA_PORT), cursorPosition());
+    Port::write_port(static_cast<uint16_t>(Command::CRTC::Port::INDEX), m_highByteCursorPos);
+    Port::write_port(static_cast<uint16_t>(Command::CRTC::Port::DATA), cursorPosition() >> 8);
+    Port::write_port(static_cast<uint16_t>(Command::CRTC::Port::INDEX), m_lowByteCursorPos);
+    Port::write_port(static_cast<uint16_t>(Command::CRTC::Port::DATA), cursorPosition());
 }
 
 VGADriver &VGADriver::instance()

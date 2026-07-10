@@ -32,7 +32,7 @@ void irq_handler(Registers reg)
         driver->handleInterrupt(reg);
 
     if (reg.int_no >= 40)
-        Port::write_port(static_cast<uint16_t>(Command::PIC::SLAVE_COMMAND), static_cast<uint16_t>(Command::PIC::EOI));
+        Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_COMMAND), static_cast<uint8_t>(Command::PIC::Value::EOI));
 
-    Port::write_port(static_cast<uint16_t>(Command::PIC::MASTER_COMMAND), static_cast<uint16_t>(Command::PIC::EOI));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_COMMAND), static_cast<uint8_t>(Command::PIC::Value::EOI));
 }

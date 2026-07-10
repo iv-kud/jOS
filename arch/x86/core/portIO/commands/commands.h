@@ -1,17 +1,24 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
-namespace Command {
-enum class CRTC {
-    INDEX_PORT = 0x3D4,
-    DATA_PORT  = 0x3D5,
-};
+#include "types/data_types.h"
 
-enum class PIC {
+namespace Command::CRTC {
+enum class Port : uint16_t {
+    INDEX = 0x3D4,
+    DATA  = 0x3D5,
+};
+} // namespace Command::CRTC
+
+namespace Command::PIC {
+enum class Port {
     /*Master and Slave Pic`s*/
     MASTER_COMMAND = 0x20,
     SLAVE_COMMAND  = 0xA0,
     MASTER_DATA    = 0x21,
     SLAVE_DATA     = 0xA1,
+};
+
+enum class Value {
     /*ICW*/
     ICW_1        = 0x11,
     ICW_2_MASTER = 0x20,
@@ -20,9 +27,9 @@ enum class PIC {
     ICW_3_SLAVE  = 0x02,
     ICW_4        = 0x01,
     /*OCW*/
-    OCW_1 = 0x00,
+    OCW_1_UNMASK_ALL = 0x00,
     /*End of interrupt*/
     EOI = 0x20,
 };
-} // namespace Command
+} // namespace Command::PIC
 #endif // COMMANDS_H
