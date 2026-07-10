@@ -2,10 +2,6 @@
 #define INTERRUPT_HANDLER_H
 #include "types/data_types.h"
 
-#define MASTER_PIC_COMMAND 0x20
-#define SLAVE_PIC_COMMAND 0xA0
-#define PIC_EOI 0x20
-
 struct Registers
 {
     uint32_t ds;

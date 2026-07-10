@@ -4,21 +4,6 @@
 
 #define CODE_SEGMENT 0x08
 #define INTERRUPT_GATE 0x8E
-/*Master and Slave Pic`s*/
-#define MASTER_PIC_COMMAND 0x20
-#define MASTER_PIC_DATA 0x21
-#define SLAVE_PIC_COMMAND 0xA0
-#define SLAVE_PIC_DATA 0xA1
-/*ICW*/
-#define ICW1 0x11
-#define MASTER_ICW2 0x20
-#define SLAVE_ICW2 0x28
-#define MASTER_ICW3 0x04
-#define SLAVE_ICW3 0x02
-#define ICW4 0x01
-/*OCW*/
-#define OCW1 0x00
-#define OCW2 0x20
 
 class InterruptDescriptor
 {

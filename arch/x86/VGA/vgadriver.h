@@ -33,8 +33,10 @@ private:
     uint8_t nextTabPosition(const uint8_t cur_pos) const;
 
 private:
-    const uint8_t m_width  = 80;
-    const uint8_t m_height = 25;
+    const uint8_t m_width             = 80;
+    const uint8_t m_height            = 25;
+    const uint8_t m_highByteCursorPos = 14;
+    const uint8_t m_lowByteCursorPos  = 15;
     uint8_t m_x, m_y;
     uint16_t *m_video_memory;
     CHARS::CHAR_COLOR m_color;

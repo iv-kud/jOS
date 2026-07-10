@@ -1,6 +1,7 @@
 #include "interrupt_handler.h"
 #include "arch/x86/drivers/irqdriver.h"
 #include "lib/display/display.h"
+#include "portIO/commands/commands.h"
 #include "portIO/port.h"
 
 InterruptHandler &InterruptHandler::instance()
@@ -31,7 +32,7 @@ void irq_handler(Registers reg)
         driver->handleInterrupt(reg);
 
     if (reg.int_no >= 40)
-        Port::write_port(SLAVE_PIC_COMMAND, PIC_EOI);
+        Port::write_port(static_cast<uint16_t>(Command::PIC::SLAVE_COMMAND), static_cast<uint16_t>(Command::PIC::EOI));
 
-    Port::write_port(MASTER_PIC_COMMAND, PIC_EOI);
+    Port::write_port(static_cast<uint16_t>(Command::PIC::MASTER_COMMAND), static_cast<uint16_t>(Command::PIC::EOI));
 }

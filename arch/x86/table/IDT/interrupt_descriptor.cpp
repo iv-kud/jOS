@@ -2,6 +2,7 @@
 #include "core/portIO/port.h"
 #include "display/display.h"
 #include "lib/data/memory/memory.h"
+#include "portIO/commands/commands.h"
 
 InterruptDescriptor::InterruptDescriptor()
 {
@@ -53,20 +54,20 @@ bool InterruptDescriptor::checkGate(const uint8_t offset, const uint32_t handler
 
 void InterruptDescriptor::picRemap()
 {
-    Port::write_port(MASTER_PIC_COMMAND, ICW1);
-    Port::write_port(SLAVE_PIC_COMMAND, ICW1);
+    Port::write_port(static_cast<uint16_t>(Command::PIC::MASTER_COMMAND), static_cast<uint16_t>(Command::PIC::ICW_1));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::SLAVE_COMMAND), static_cast<uint16_t>(Command::PIC::ICW_1));
 
-    Port::write_port(MASTER_PIC_DATA, MASTER_ICW2);
-    Port::write_port(SLAVE_PIC_DATA, SLAVE_ICW2);
+    Port::write_port(static_cast<uint16_t>(Command::PIC::MASTER_DATA), static_cast<uint16_t>(Command::PIC::ICW_2_MASTER));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::SLAVE_DATA), static_cast<uint16_t>(Command::PIC::ICW_2_SLAVE));
 
-    Port::write_port(MASTER_PIC_DATA, MASTER_ICW3);
-    Port::write_port(SLAVE_PIC_DATA, SLAVE_ICW3);
+    Port::write_port(static_cast<uint16_t>(Command::PIC::MASTER_DATA), static_cast<uint16_t>(Command::PIC::ICW_3_MASTER));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::SLAVE_DATA), static_cast<uint16_t>(Command::PIC::ICW_3_SLAVE));
 
-    Port::write_port(MASTER_PIC_DATA, ICW4);
-    Port::write_port(SLAVE_PIC_DATA, ICW4);
+    Port::write_port(static_cast<uint16_t>(Command::PIC::MASTER_DATA), static_cast<uint16_t>(Command::PIC::ICW_4));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::SLAVE_DATA), static_cast<uint16_t>(Command::PIC::ICW_4));
 
-    Port::write_port(MASTER_PIC_DATA, OCW1);
-    Port::write_port(SLAVE_PIC_DATA, OCW1);
+    Port::write_port(static_cast<uint16_t>(Command::PIC::MASTER_DATA), static_cast<uint16_t>(Command::PIC::OCW_1));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::SLAVE_DATA), static_cast<uint16_t>(Command::PIC::OCW_1));
 }
 
 void InterruptDescriptor::setTable()

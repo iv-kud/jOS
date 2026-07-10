@@ -1,4 +1,5 @@
 #include "vgadriver.h"
+#include "portIO/commands/commands.h"
 #include "portIO/port.h"
 
 VGADriver::VGADriver()
@@ -35,10 +36,10 @@ uint16_t VGADriver::cursorPosition() const
 
 void VGADriver::moveCursor()
 {
-    Port::write_port(0x3D4, 14);
-    Port::write_port(0x3D5, cursorPosition() >> 8);
-    Port::write_port(0x3D4, 15);
-    Port::write_port(0x3D5, cursorPosition());
+    Port::write_port(static_cast<uint16_t>(Command::CRTC::INDEX_PORT), m_highByteCursorPos);
+    Port::write_port(static_cast<uint16_t>(Command::CRTC::DATA_PORT), cursorPosition() >> 8);
+    Port::write_port(static_cast<uint16_t>(Command::CRTC::INDEX_PORT), m_lowByteCursorPos);
+    Port::write_port(static_cast<uint16_t>(Command::CRTC::DATA_PORT), cursorPosition());
 }
 
 VGADriver &VGADriver::instance()
