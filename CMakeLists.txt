@@ -57,6 +57,7 @@ set(HEDER_SOURCES
     arch/x86/drivers/irqdriver.h
     arch/x86/drivers/pitdriver.h
     arch/x86/drivers/keyboarddriver.h
+    arch/x86/core/portIO/commands/commands.h
 )
 
 set(ALL_SOURCES
