@@ -54,20 +54,17 @@ bool InterruptDescriptor::checkGate(const uint8_t offset, const uint32_t handler
 
 void InterruptDescriptor::picRemap()
 {
-    Port::write_port(static_cast<uint16_t>(Command::PIC::MASTER_COMMAND), static_cast<uint16_t>(Command::PIC::ICW_1));
-    Port::write_port(static_cast<uint16_t>(Command::PIC::SLAVE_COMMAND), static_cast<uint16_t>(Command::PIC::ICW_1));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_COMMAND), static_cast<uint8_t>(Command::PIC::Value::ICW_1));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_COMMAND), static_cast<uint8_t>(Command::PIC::Value::ICW_1));
 
-    Port::write_port(static_cast<uint16_t>(Command::PIC::MASTER_DATA), static_cast<uint16_t>(Command::PIC::ICW_2_MASTER));
-    Port::write_port(static_cast<uint16_t>(Command::PIC::SLAVE_DATA), static_cast<uint16_t>(Command::PIC::ICW_2_SLAVE));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA), static_cast<uint8_t>(Command::PIC::Value::ICW_2_MASTER));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA), static_cast<uint8_t>(Command::PIC::Value::ICW_2_SLAVE));
 
-    Port::write_port(static_cast<uint16_t>(Command::PIC::MASTER_DATA), static_cast<uint16_t>(Command::PIC::ICW_3_MASTER));
-    Port::write_port(static_cast<uint16_t>(Command::PIC::SLAVE_DATA), static_cast<uint16_t>(Command::PIC::ICW_3_SLAVE));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA), static_cast<uint8_t>(Command::PIC::Value::ICW_3_MASTER));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA), static_cast<uint8_t>(Command::PIC::Value::ICW_3_SLAVE));
 
-    Port::write_port(static_cast<uint16_t>(Command::PIC::MASTER_DATA), static_cast<uint16_t>(Command::PIC::ICW_4));
-    Port::write_port(static_cast<uint16_t>(Command::PIC::SLAVE_DATA), static_cast<uint16_t>(Command::PIC::ICW_4));
-
-    Port::write_port(static_cast<uint16_t>(Command::PIC::MASTER_DATA), static_cast<uint16_t>(Command::PIC::OCW_1));
-    Port::write_port(static_cast<uint16_t>(Command::PIC::SLAVE_DATA), static_cast<uint16_t>(Command::PIC::OCW_1));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA), static_cast<uint8_t>(Command::PIC::Value::ICW_4));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA), static_cast<uint8_t>(Command::PIC::Value::ICW_4));
 }
 
 void InterruptDescriptor::setTable()
