@@ -14,11 +14,7 @@ extern "C" void main()
     static PITDriver pit;
     keyboard.init();
     pit.init();
-    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA), 0xFC);
-    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA), 0xFF);
-
     asm volatile("sti");
-
     while (true)
         ;
 }
