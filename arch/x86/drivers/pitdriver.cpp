@@ -3,8 +3,8 @@
 #include "display.h"
 
 PITDriver::PITDriver(uint32_t frequency)
-    : IRQDriver(PIT_IRQ_VECTOR),
-    m_frequency(frequency)
+    : IRQDriver(PIT_IRQ_VECTOR)
+    , m_frequency(frequency)
 {}
 
 void PITDriver::init()

@@ -68,7 +68,6 @@ void InterruptDescriptor::picRemap()
 
     Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA), static_cast<uint16_t>(Command::PIC::Value::OCW_1_MASK_ALL));
     Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA), static_cast<uint16_t>(Command::PIC::Value::OCW_1_MASK_ALL));
-
 }
 
 void InterruptDescriptor::setTable()

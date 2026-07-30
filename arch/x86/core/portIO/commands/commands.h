@@ -28,7 +28,7 @@ enum class Value {
     ICW_4        = 0x01,
     /*OCW*/
     OCW_1_UNMASK_ALL = 0x00,
-    OCW_1_MASK_ALL = 0xFF,
+    OCW_1_MASK_ALL   = 0xFF,
     /*End of interrupt*/
     EOI = 0x20,
 };

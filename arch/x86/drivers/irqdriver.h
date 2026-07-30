@@ -18,10 +18,12 @@ public:
     virtual void handleInterrupt(Registers reg) = 0;
     void enableLine();
     void disableLine();
+
 private:
     irqInfo getIrqInfo(const uint8_t vector) const;
+
 protected:
-    ~IRQDriver() = default;
+    ~IRQDriver()        = default;
     uint8_t m_irqVector = 0;
 };
 
