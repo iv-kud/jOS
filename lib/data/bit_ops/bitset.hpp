@@ -8,6 +8,12 @@ template <uint8_t N> class bitset
 public:
     bitset() { memset(m_data, 0, sizeof(m_data)); }
 
+    explicit bitset(uint64_t value)
+    {
+        memset(m_data, 0, sizeof(m_data));
+        setRange(0, N - 1, value);
+    }
+
     void set(uint8_t position, bool val = true)
     {
         uint8_t block = position / 8;
