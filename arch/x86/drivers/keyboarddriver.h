@@ -6,8 +6,7 @@
 class KeyboardDriver : public IRQDriver
 {
 public:
-    KeyboardDriver() = default;
-
+    KeyboardDriver();
     void init() override;
     void handleInterrupt(Registers reg) override;
 

@@ -2,9 +2,14 @@
 #include "arch/x86/core/portIO/port.h"
 #include "display.h"
 
+KeyboardDriver::KeyboardDriver()
+    : IRQDriver(KEYBOARD_IRQ_VECTOR)
+{}
+
 void KeyboardDriver::init()
 {
     InterruptHandler::instance().registerHandlers(KEYBOARD_IRQ_VECTOR, this);
+    enableLine();
 }
 
 void KeyboardDriver::handleInterrupt(Registers reg)

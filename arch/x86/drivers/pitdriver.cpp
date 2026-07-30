@@ -3,7 +3,8 @@
 #include "display.h"
 
 PITDriver::PITDriver(uint32_t frequency)
-    : m_frequency(frequency)
+    : IRQDriver(PIT_IRQ_VECTOR),
+    m_frequency(frequency)
 {}
 
 void PITDriver::init()
@@ -18,6 +19,8 @@ void PITDriver::init()
 
     Port::write_port(PIT_CHANNEL0_PORT, low);
     Port::write_port(PIT_CHANNEL0_PORT, high);
+
+    enableLine();
 }
 
 void PITDriver::handleInterrupt(Registers)
