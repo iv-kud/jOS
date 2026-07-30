@@ -22,7 +22,7 @@ void InterruptHandler::registerHandlers(const uint8_t num, IRQDriver *driver)
 
 void isr_handler(Registers reg)
 {
-    jDebug() << "Exeption: " << NumberBase::Hex << (uint64_t) reg.int_no;
+    jError() << "Exeption: " << NumberBase::Hex << (uint64_t) reg.int_no;
 }
 
 void irq_handler(Registers reg)
