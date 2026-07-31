@@ -7,7 +7,6 @@ class PITDriver : public IRQDriver
 {
 public:
     explicit PITDriver(uint32_t frequency = 50);
-
     void init() override;
     void handleInterrupt(Registers reg) override;
 

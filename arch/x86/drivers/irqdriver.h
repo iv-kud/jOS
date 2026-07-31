@@ -21,10 +21,10 @@ public:
 
 private:
     irqInfo getIrqInfo(const uint8_t vector) const;
+    uint8_t m_irqVector;
 
 protected:
-    ~IRQDriver()        = default;
-    uint8_t m_irqVector = 0;
+    ~IRQDriver() = default;
 };
 
 #endif // IRQDRIVER_H
