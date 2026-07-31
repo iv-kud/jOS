@@ -1,7 +1,5 @@
-#include "arch/x86/core/portIO/port.h"
 #include "drivers/keyboarddriver.h"
 #include "drivers/pitdriver.h"
-#include "portIO/commands/commands.h"
 #include "table/GDT/global_descriptor.h"
 #include "table/IDT/interrupt_descriptor.h"
 
