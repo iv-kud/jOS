@@ -97,11 +97,56 @@ i686-elf-gcc --version
 
 ## Arch Linux / Ubuntu
 
+### Debug build
+
+Configure the project:
+
 ```bash
-mkdir build && cd build
+cmake --preset x86-debug
+```
 
-cmake -DCMAKE_TOOLCHAIN_FILE=../arch/x86/toolchain-x86.cmake ..
+Build the kernel and ISO image:
 
-make
-make run
+```bash
+cmake --build --preset x86-debug
+```
+
+Run the OS in QEMU:
+
+```bash
+cmake --build build/debug --target run
+```
+
+### Release build
+
+Configure the project:
+
+```bash
+cmake --preset x86-release
+```
+
+Build the kernel and ISO image:
+
+```bash
+cmake --build --preset x86-release
+```
+
+Run the release build in QEMU:
+
+```bash
+cmake --build build/release --target run
+```
+
+### Debug with GDB
+
+Start QEMU in debug mode:
+
+```bash
+cmake --build build/debug --target debug
+```
+
+Then, in another terminal, connect GDB:
+
+```bash
+cmake --build build/debug --target gdb
 ```
