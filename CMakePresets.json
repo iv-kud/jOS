@@ -1,0 +1,43 @@
+{
+    "version": 3,
+
+    "configurePresets": [
+        {
+            "name": "x86-debug",
+            "displayName": "x86 Debug",
+            "binaryDir": "${sourceDir}/build/debug",
+            "toolchainFile": "arch/x86/toolchain-x86.cmake",
+            "cacheVariables": {
+                "ARCH": "x86",
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "x86-release",
+            "displayName": "x86 Release",
+            "binaryDir": "${sourceDir}/build/release",
+            "toolchainFile": "arch/x86/toolchain-x86.cmake",
+            "cacheVariables": {
+                "ARCH": "x86",
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ],
+
+    "buildPresets": [
+        {
+            "name": "x86-debug",
+            "configurePreset": "x86-debug",
+            "targets": [
+                "iso"
+            ]
+        },
+        {
+            "name": "x86-release",
+            "configurePreset": "x86-release",
+            "targets": [
+                "iso"
+            ]
+        }
+    ]
+}

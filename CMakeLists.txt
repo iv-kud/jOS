@@ -1,12 +1,9 @@
-cmake_minimum_required(VERSION 3.16)
-project(JustOS VERSION 0.1 LANGUAGES C CXX)
-
-set(ARCH "x86" CACHE STRING "Target architecture (x86, arm, etc)")
-
+cmake_minimum_required(VERSION 3.21)
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif()
-
+project(JustOS VERSION 0.1 LANGUAGES C CXX)
+set(ARCH "x86" CACHE STRING "Target architecture (x86, arm, etc)")
 string(TOLOWER "${ARCH}" ARCH_LOWER)
 
 if(ARCH_LOWER STREQUAL "x86")
@@ -112,12 +109,20 @@ add_custom_target(run
 )
 
 add_custom_target(debug
-    COMMAND qemu-system-i386 -cdrom ${CMAKE_BINARY_DIR}/${TARGET_NAME}.iso -vga std -S -gdb tcp::1234
+    COMMAND qemu-system-i386
+        -cdrom ${CMAKE_BINARY_DIR}/${TARGET_NAME}.iso
+        -vga std
+        -S
+        -gdb tcp:127.0.0.1:1234
     COMMENT "Starting QEMU in debug mode (GDB server: 1234)"
     DEPENDS iso
 )
 
 add_custom_target(gdb
-    COMMAND gdb -ex "target remote :1234" -ex "break main" -ex "c" ${CMAKE_BINARY_DIR}/JustOS-x86
+    COMMAND gdb
+        -ex "target remote 127.0.0.1:1234"
+        -ex "break main"
+        -ex "c"
+        ${CMAKE_BINARY_DIR}/${TARGET_NAME}
     COMMENT "Connecting GDB to QEMU"
 )
