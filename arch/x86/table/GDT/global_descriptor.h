@@ -10,11 +10,12 @@ public:
 private:
     bool initTable();
     void setTable();
+    void setSegment(const uint8_t index, const uint64_t value);
     uint64_t makeSegment(const uint8_t access) const;
     uint64_t kernelCodeSegment() const;
     uint64_t kernelDataSegment() const;
     uint64_t userCodeSegment() const;
-    uint64_t userdataSegment() const;
+    uint64_t userDataSegment() const;
     uint64_t taskStateSegment() const;
 
     Table::GDT::Segment_Descriptor m_table[5];

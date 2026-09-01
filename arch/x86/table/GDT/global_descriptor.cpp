@@ -1,24 +1,25 @@
 #include "global_descriptor.h"
 #include "bitset.hpp"
 #include "display/display.h"
+#include "core/panic.h"
 
 GlobalDescriptor::GlobalDescriptor()
 {
-    if (initTable()) {
-        jInfo() << "[GDT] The table structure is correct";
-        setTable();
-    } else
-        jError() << "[GDT] The table structure is incorrect";
+  if (!initTable())
+    panic("Failed to initialize GDT");
+
+  jInfo() << "[GDT] The table structure is correct";
+  setTable();
 }
 
 bool GlobalDescriptor::initTable()
 {
-    bitset<64> nullSegment;
-    reinterpret_cast<uint64_t &>(m_table[0]) = nullSegment.data();
-    reinterpret_cast<uint64_t &>(m_table[1]) = kernelCodeSegment();
-    reinterpret_cast<uint64_t &>(m_table[2]) = kernelDataSegment();
-    reinterpret_cast<uint64_t &>(m_table[3]) = userCodeSegment();
-    reinterpret_cast<uint64_t &>(m_table[4]) = userdataSegment();
+    uint64_t nullSegment = 0;
+    setSegment(0, nullSegment);
+    setSegment(1, kernelCodeSegment());
+    setSegment(2, kernelDataSegment());
+    setSegment(3, userCodeSegment());
+    setSegment(4, userDataSegment());
 
     constexpr uint64_t expected[5] = {0x0000000000000000, 0x00CF9A000000FFFF, 0x00CF92000000FFFF, 0x00CFFA000000FFFF, 0x00CFF2000000FFFF};
 
@@ -44,7 +45,7 @@ uint64_t GlobalDescriptor::userCodeSegment() const
     return makeSegment(0xFA);
 }
 
-uint64_t GlobalDescriptor::userdataSegment() const
+uint64_t GlobalDescriptor::userDataSegment() const
 {
     return makeSegment(0xF2);
 }
@@ -62,6 +63,12 @@ void GlobalDescriptor::setTable()
     gdtr.base  = (uint32_t) m_table;
 
     flush_gdt(&gdtr);
+}
+///TODO: It is better to use the usual structure assignment.
+///But I'm too lazy ;)
+void GlobalDescriptor::setSegment(const uint8_t index, const uint64_t value)
+{
+  memcpy(&m_table[index], &value, sizeof(value));
 }
 
 uint64_t GlobalDescriptor::makeSegment(const uint8_t access) const
