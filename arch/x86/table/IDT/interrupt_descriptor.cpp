@@ -3,14 +3,15 @@
 #include "display/display.h"
 #include "lib/data/memory/memory.h"
 #include "portIO/commands/commands.h"
+#include "core/panic.h"
 
 InterruptDescriptor::InterruptDescriptor()
 {
-    if (initTable()) {
-        jInfo() << "[IDT] The table structure is correct";
-        setTable();
-    } else
-        jError() << "[IDT] The table structure is incorrect";
+  if (!initTable())
+    panic("Failed to initialize IDT");
+
+  setTable();
+  jInfo() << "[IDT] Initialized successfully";
 }
 
 bool InterruptDescriptor::initTable()

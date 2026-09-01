@@ -12,7 +12,7 @@ void KeyboardDriver::init()
     enableLine();
 }
 
-void KeyboardDriver::handleInterrupt(Registers reg)
+void KeyboardDriver::handleInterrupt(const Registers &reg)
 {
     uint8_t status = Port::read_port(KEYBOARD_STATUS_PORT);
 

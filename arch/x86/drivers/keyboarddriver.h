@@ -8,7 +8,7 @@ class KeyboardDriver : public IRQDriver
 public:
     KeyboardDriver();
     void init() override;
-    void handleInterrupt(Registers reg) override;
+    void handleInterrupt(const Registers& reg) override;
 
 private:
     static constexpr uint8_t KEYBOARD_DATA_PORT   = 0x60;

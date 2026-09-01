@@ -23,7 +23,7 @@ void PITDriver::init()
     enableLine();
 }
 
-void PITDriver::handleInterrupt(Registers)
+void PITDriver::handleInterrupt(const Registers &)
 {
     ++m_ticks;
 

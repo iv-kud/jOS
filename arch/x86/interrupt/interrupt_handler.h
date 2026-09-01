@@ -18,7 +18,6 @@ public:
     static InterruptHandler &instance();
     IRQDriver *getHandler(uint8_t num) const;
     void registerHandlers(const uint8_t num, IRQDriver *driver);
-
     InterruptHandler(const InterruptHandler &)            = delete;
     InterruptHandler &operator=(const InterruptHandler &) = delete;
 
@@ -27,7 +26,7 @@ private:
     IRQDriver *m_drivers[256] = {nullptr};
 };
 
-extern "C" void isr_handler(Registers reg);
-extern "C" void irq_handler(Registers reg);
+extern "C" void isr_handler(const Registers* reg);
+extern "C" void irq_handler(const Registers* reg);
 
 #endif // INTERRUPT_HANDLER_H
