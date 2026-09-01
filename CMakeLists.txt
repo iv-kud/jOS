@@ -33,6 +33,7 @@ set(CPP_SOURCES
     arch/x86/drivers/pitdriver.cpp
     arch/x86/drivers/keyboarddriver.cpp
     arch/x86/drivers/irqdriver.cpp
+    arch/x86/core/panic.cpp
 )
 
 set(ASM_SOURCES
@@ -56,6 +57,7 @@ set(HEDER_SOURCES
     arch/x86/drivers/pitdriver.h
     arch/x86/drivers/keyboarddriver.h
     arch/x86/core/portIO/commands/commands.h
+    arch/x86/core/panic.h
 )
 
 set(ALL_SOURCES
