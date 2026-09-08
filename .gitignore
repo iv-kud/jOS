@@ -3,3 +3,4 @@
 *.iso
 /build/
 CMakeLists.txt.user
+.idea/
