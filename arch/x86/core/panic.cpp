@@ -3,9 +3,9 @@
 
 void panic(const char *message)
 {
-  asm volatile("cli");
+    asm volatile("cli");
 
-  jError() << "Kernel Panic: " << message;
-  while (true)
-    asm volatile("hlt");
+    jError() << "Kernel Panic: " << message;
+    while (true)
+        asm volatile("hlt");
 }

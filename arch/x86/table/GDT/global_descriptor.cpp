@@ -1,15 +1,15 @@
 #include "global_descriptor.h"
 #include "bitset.hpp"
-#include "display/display.h"
 #include "core/panic.h"
+#include "display/display.h"
 
 GlobalDescriptor::GlobalDescriptor()
 {
-  if (!initTable())
-    panic("Failed to initialize GDT");
+    if (!initTable())
+        panic("Failed to initialize GDT");
 
-  jInfo() << "[GDT] The table structure is correct";
-  setTable();
+    jInfo() << "[GDT] The table structure is correct";
+    setTable();
 }
 
 bool GlobalDescriptor::initTable()
@@ -21,7 +21,11 @@ bool GlobalDescriptor::initTable()
     setSegment(3, userCodeSegment());
     setSegment(4, userDataSegment());
 
-    constexpr uint64_t expected[5] = {0x0000000000000000, 0x00CF9A000000FFFF, 0x00CF92000000FFFF, 0x00CFFA000000FFFF, 0x00CFF2000000FFFF};
+    constexpr uint64_t expected[5] = {0x0000000000000000,
+                                      0x00CF9A000000FFFF,
+                                      0x00CF92000000FFFF,
+                                      0x00CFFA000000FFFF,
+                                      0x00CFF2000000FFFF};
 
     for (int i = 0; i < 5; ++i) {
         if (reinterpret_cast<uint64_t &>(m_table[i]) != expected[i])
@@ -68,7 +72,7 @@ void GlobalDescriptor::setTable()
 ///But I'm too lazy ;)
 void GlobalDescriptor::setSegment(const uint8_t index, const uint64_t value)
 {
-  memcpy(&m_table[index], &value, sizeof(value));
+    memcpy(&m_table[index], &value, sizeof(value));
 }
 
 uint64_t GlobalDescriptor::makeSegment(const uint8_t access) const

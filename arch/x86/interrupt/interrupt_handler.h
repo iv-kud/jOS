@@ -26,7 +26,7 @@ private:
     IRQDriver *m_drivers[256] = {nullptr};
 };
 
-extern "C" void isr_handler(const Registers* reg);
-extern "C" void irq_handler(const Registers* reg);
+extern "C" void isr_handler(const Registers *reg);
+extern "C" void irq_handler(const Registers *reg);
 
 #endif // INTERRUPT_HANDLER_H

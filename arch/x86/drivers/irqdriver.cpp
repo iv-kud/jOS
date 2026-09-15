@@ -21,7 +21,8 @@ void IRQDriver::enableLine()
         bitset<8> masterMask(Port::read_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA)));
         masterMask.set(static_cast<uint8_t>(Command::PIC::Value::ICW_3_SLAVE), false);
 
-        Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA), static_cast<uint8_t>(masterMask.data()));
+        Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA),
+                         static_cast<uint8_t>(masterMask.data()));
     }
 }
 
@@ -40,11 +41,17 @@ void IRQDriver::disableLine()
 irqInfo IRQDriver::getIrqInfo(const uint8_t vector) const
 {
     if (vector >= 0x20 && vector <= 0x27) {
-        return {static_cast<uint8_t>(vector - 0x20), static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA), false, true};
+        return {static_cast<uint8_t>(vector - 0x20),
+                static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA),
+                false,
+                true};
     }
 
     if (vector >= 0x28 && vector <= 0x2F) {
-        return {static_cast<uint8_t>(vector - 0x28), static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA), true, true};
+        return {static_cast<uint8_t>(vector - 0x28),
+                static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA),
+                true,
+                true};
     }
     return {0, 0, false, false};
 }

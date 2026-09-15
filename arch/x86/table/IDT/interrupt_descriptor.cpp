@@ -1,24 +1,25 @@
 #include "interrupt_descriptor.h"
+#include "core/panic.h"
 #include "core/portIO/port.h"
 #include "display/display.h"
 #include "lib/data/memory/memory.h"
 #include "portIO/commands/commands.h"
-#include "core/panic.h"
 
 InterruptDescriptor::InterruptDescriptor()
 {
-  if (!initTable())
-    panic("Failed to initialize IDT");
+    if (!initTable())
+        panic("Failed to initialize IDT");
 
-  setTable();
-  jInfo() << "[IDT] Initialized successfully";
+    setTable();
+    jInfo() << "[IDT] Initialized successfully";
 }
 
 bool InterruptDescriptor::initTable()
 {
     memset(m_table, 0, sizeof(m_table));
     for (uint16_t i = 0; i < 256; ++i) {
-        if (m_table[i].low_offset != 0 || m_table[i].segment_selector != 0 || m_table[i].zero != 0 || m_table[i].gate_type != 0 || m_table[i].high_offset != 0) {
+        if (m_table[i].low_offset != 0 || m_table[i].segment_selector != 0 || m_table[i].zero != 0
+            || m_table[i].gate_type != 0 || m_table[i].high_offset != 0) {
             return false;
         }
     }
@@ -47,28 +48,42 @@ void InterruptDescriptor::setGate(const uint8_t offset, const uint32_t handler, 
     m_table[offset].high_offset      = (handler & 0xFFFF0000) >> 16;
 }
 
-bool InterruptDescriptor::checkGate(const uint8_t offset, const uint32_t handler, const uint8_t type) const
+bool InterruptDescriptor::checkGate(const uint8_t offset,
+                                    const uint32_t handler,
+                                    const uint8_t type) const
 {
-    return m_table[offset].low_offset == (handler & 0xFFFF) && m_table[offset].segment_selector == CODE_SEGMENT && m_table[offset].zero == 0 && m_table[offset].gate_type == type
+    return m_table[offset].low_offset == (handler & 0xFFFF)
+           && m_table[offset].segment_selector == CODE_SEGMENT && m_table[offset].zero == 0
+           && m_table[offset].gate_type == type
            && m_table[offset].high_offset == (handler & 0xFFFF0000) >> 16;
 }
 
 void InterruptDescriptor::picRemap()
 {
-    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_COMMAND), static_cast<uint8_t>(Command::PIC::Value::ICW_1));
-    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_COMMAND), static_cast<uint8_t>(Command::PIC::Value::ICW_1));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_COMMAND),
+                     static_cast<uint8_t>(Command::PIC::Value::ICW_1));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_COMMAND),
+                     static_cast<uint8_t>(Command::PIC::Value::ICW_1));
 
-    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA), static_cast<uint8_t>(Command::PIC::Value::ICW_2_MASTER));
-    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA), static_cast<uint8_t>(Command::PIC::Value::ICW_2_SLAVE));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA),
+                     static_cast<uint8_t>(Command::PIC::Value::ICW_2_MASTER));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA),
+                     static_cast<uint8_t>(Command::PIC::Value::ICW_2_SLAVE));
 
-    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA), static_cast<uint8_t>(Command::PIC::Value::ICW_3_MASTER));
-    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA), static_cast<uint8_t>(Command::PIC::Value::ICW_3_SLAVE));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA),
+                     static_cast<uint8_t>(Command::PIC::Value::ICW_3_MASTER));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA),
+                     static_cast<uint8_t>(Command::PIC::Value::ICW_3_SLAVE));
 
-    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA), static_cast<uint8_t>(Command::PIC::Value::ICW_4));
-    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA), static_cast<uint8_t>(Command::PIC::Value::ICW_4));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA),
+                     static_cast<uint8_t>(Command::PIC::Value::ICW_4));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA),
+                     static_cast<uint8_t>(Command::PIC::Value::ICW_4));
 
-    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA), static_cast<uint16_t>(Command::PIC::Value::OCW_1_MASK_ALL));
-    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA), static_cast<uint16_t>(Command::PIC::Value::OCW_1_MASK_ALL));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA),
+                     static_cast<uint16_t>(Command::PIC::Value::OCW_1_MASK_ALL));
+    Port::write_port(static_cast<uint16_t>(Command::PIC::Port::SLAVE_DATA),
+                     static_cast<uint16_t>(Command::PIC::Value::OCW_1_MASK_ALL));
 }
 
 void InterruptDescriptor::setTable()

@@ -12,8 +12,7 @@ extern "C" void main()
     static PITDriver pit;
     keyboard.init();
     pit.init();
-
     asm volatile("sti");
     while (true)
-      asm volatile("hlt");
+        asm volatile("hlt");
 }

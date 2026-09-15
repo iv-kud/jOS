@@ -67,7 +67,8 @@ private:
     }
 };
 
-template <uint8_t N> inline void bitset<N>::setRange(const uint8_t start, const uint8_t end, uint64_t data)
+template <uint8_t N>
+inline void bitset<N>::setRange(const uint8_t start, const uint8_t end, uint64_t data)
 {
     if (start > end || end >= N)
         return;

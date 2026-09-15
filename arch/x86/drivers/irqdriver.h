@@ -14,8 +14,8 @@ class IRQDriver
 {
 public:
     explicit IRQDriver(uint8_t irqVector);
-    virtual void init()                         = 0;
-    virtual void handleInterrupt(const Registers& reg) = 0;
+    virtual void init()                                = 0;
+    virtual void handleInterrupt(const Registers &reg) = 0;
     void enableLine();
     void disableLine();
 
