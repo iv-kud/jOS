@@ -69,6 +69,14 @@ set(ALL_SOURCES
 if(ARCH_LOWER STREQUAL "x86")
     enable_language(ASM_NASM)
     add_executable(${TARGET_NAME}  ${ALL_SOURCES})
+
+    if(TARGET clangformat)
+        add_dependencies(${TARGET_NAME} clangformat)
+        add_dependencies(display clangformat)
+        add_dependencies(memory clangformat)
+        add_dependencies(bitset clangformat)
+    endif()
+
     execute_process(
         COMMAND i686-elf-gcc -print-libgcc-file-name
         OUTPUT_VARIABLE LIBGCC_PATH

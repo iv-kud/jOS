@@ -5,7 +5,7 @@ BasedOnStyle: LLVM
 IndentWidth: 4
 TabWidth: 4
 UseTab: Never
-ColumnLimit: 200
+ColumnLimit: 100
 
 AccessModifierOffset: -4
 PointerAlignment: Right
@@ -29,9 +29,13 @@ BraceWrapping:
   SplitEmptyNamespace: false
 
 AllowShortFunctionsOnASingleLine: Inline
+AllowShortLambdasOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortLoopsOnASingleLine: false
+AllowAllArgumentsOnNextLine: false
 AllowShortBlocksOnASingleLine: Never
+
+LambdaBodyIndentation: OuterScope
 
 BinPackArguments: false
 BinPackParameters: false
@@ -88,4 +92,3 @@ ReflowComments: false
 
 InsertNewlineAtEOF: true
 LineEnding: DeriveLF
-...

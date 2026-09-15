@@ -15,11 +15,10 @@ if (ENABLE_CLANG_FORMATTING)
     if (ALL_SOURCE_FILES)
         add_custom_target(
                 clangformat
-                ALL
                 COMMAND ${CLANG_FORMAT_EXECUTABLE}
-                -style=file
-                -i
-                ${ALL_SOURCE_FILES}
+                    -style=file
+                    -i
+                    ${ALL_SOURCE_FILES}
                 COMMENT "Running clang-format"
                 VERBATIM
         )
