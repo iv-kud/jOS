@@ -39,4 +39,5 @@ SECTIONS {
         *(.note.gnu.property)
         *(.comment)
     }
+    _kernel_end = .;
 }
