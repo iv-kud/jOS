@@ -18,7 +18,8 @@ void IRQDriver::enableLine()
     Port::write_port(info.port, static_cast<uint8_t>(mask.data()));
 
     if (info.isSlave) {
-        bitset<8> masterMask(Port::read_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA)));
+        bitset<8> masterMask(
+            Port::read_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA)));
         masterMask.set(static_cast<uint8_t>(Command::PIC::Value::ICW_3_SLAVE), false);
 
         Port::write_port(static_cast<uint16_t>(Command::PIC::Port::MASTER_DATA),
