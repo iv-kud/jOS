@@ -4,5 +4,5 @@
 
 void *memset(void *dest, int value, uint32_t count);
 void *memcpy(void *dest, const void *src, uint32_t count);
-
+void *kmalloc(const uint32_t size, bool align = false, uintptr_t *phys = nullptr);
 #endif // MEMORY_H
